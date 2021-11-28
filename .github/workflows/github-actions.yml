@@ -1,0 +1,19 @@
+name: build-deploy-astrobase-tasks
+on: [push]
+jobs:
+  build-deploy-astrobase-tasks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: execute build & deploy procedure on mintbox
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.MY_HOST }}
+          username: ${{ secrets.MY_USERNAME }}
+          #password: ${{ secrets.MY_PASSWORD }}
+          key: ${{ secrets.MY_PRIVATE_KEY }}
+          script: |
+             cd ~/my_docker/astrobase_tasks
+             git pull
+             docker build -t astrobase_tasks:latest .
+             cd $HOME/shared
+             docker-compose -p dockernest up -d
