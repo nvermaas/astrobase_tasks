@@ -1,8 +1,8 @@
 import os
 from celery import Celery
 
-RABBITMQ_BROKER = "amqp://celery:celery@192.168.178.37:5672/celery"
-#RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
+#RABBITMQ_BROKER = "amqp://celery:celery@192.168.178.37:5672/celery"
+RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
 
 app = Celery('my_tasks',
              backend='rpc://',
