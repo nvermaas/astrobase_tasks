@@ -8,4 +8,5 @@ def add(x, y):
 
 @app.task
 def ping(name):
+    # demo task to see if this can be reached from Django
     return "pong " + name
