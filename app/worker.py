@@ -7,7 +7,7 @@ RABBITMQ_BROKER = "amqp://celery:celery@192.168.178.37:5672/celery"
 app = Celery('tasks',
              backend='rpc://',
              broker=RABBITMQ_BROKER,
-             include=['tasks'])
+             include=['app.tasks'])
 
 # Optional configuration, see the application user guide.
 app.conf.update(
