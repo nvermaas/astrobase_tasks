@@ -1,4 +1,4 @@
-from my_tasks import add, ping, dir
+from my_tasks import app, add, ping, dir
 
 def run_examples():
     task = ping.delay('astrobase_tasks')
@@ -10,11 +10,19 @@ def run_examples():
     print(task.get())
     print(task.ready())
 
+def run_ping(name):
+    task = ping.delay(name)
+    print(task.get())
+
 def run_dir():
     task = dir.delay()
-    print(task.get())
+    return task.get()
+
 
 # client program to test access to celery/broker
 if __name__ == '__main__':
     # run_examples()
-    run_dir()
+    run_ping('Nico')
+
+    dir = run_dir("/shared")
+    print(dir)

@@ -1,4 +1,6 @@
 import os
+from os import listdir
+from os.path import isfile, join
 from celery import Celery
 
 try:
@@ -31,6 +33,6 @@ def ping(name):
     return "pong " + name
 
 @app.task
-def dir():
-    return os.getcwd()
-
+def dir(my_path):
+    #return os.getcwd()
+    return listdir(mypath)
