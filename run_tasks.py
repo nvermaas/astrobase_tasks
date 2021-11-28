@@ -1,4 +1,4 @@
-from my_tasks.tasks import add, ping
+from app.tasks import add, ping
 
 def run_examples():
     task = ping.delay('astrobase_tasks')
