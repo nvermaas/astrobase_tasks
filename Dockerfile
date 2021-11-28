@@ -8,4 +8,4 @@ RUN rm requirements.txt
 RUN chmod +x workers.sh
 
 COPY . /
-WORKDIR /app
+WORKDIR /
