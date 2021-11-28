@@ -1,1 +1,0 @@
-celery -A app.worker worker --pool=solo -l info
