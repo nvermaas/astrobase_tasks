@@ -1,0 +1,1 @@
+celery -A my_tasks worker --pool=solo -l info
