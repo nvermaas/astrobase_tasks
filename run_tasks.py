@@ -14,8 +14,8 @@ def run_ping(name):
     task = ping.delay(name)
     print(task.get())
 
-def run_dir():
-    task = dir.delay()
+def run_dir(path):
+    task = dir.delay(path)
     return task.get()
 
 

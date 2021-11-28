@@ -35,4 +35,4 @@ def ping(name):
 @app.task
 def dir(my_path):
     #return os.getcwd()
-    return listdir(mypath)
+    return listdir(my_path)
