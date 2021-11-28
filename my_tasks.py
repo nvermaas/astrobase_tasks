@@ -17,6 +17,8 @@ app.conf.update(
     result_expires=3600,
 )
 
+#------------------------------------------------------------
+
 @app.task
 def add(x, y):
     for i in range(1000):
@@ -28,5 +30,7 @@ def ping(name):
     # demo task to see if this can be reached from Django
     return "pong " + name
 
-
+@app.task
+def dir():
+    return os.getcwd()
 
