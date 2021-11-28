@@ -6,7 +6,7 @@ def run_examples():
 
     task = add.delay(4,4)
     print(task.ready())
-
+    print(task.ready())
     print(task.get())
     print(task.ready())
 
