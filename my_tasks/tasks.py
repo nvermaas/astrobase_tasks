@@ -8,5 +8,4 @@ def add(x, y):
 
 @app.task
 def ping(name):
-
     return "pong "+name
