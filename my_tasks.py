@@ -1,6 +1,7 @@
 import os
 from os import listdir
 from celery import Celery
+from celery import current_task
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
@@ -18,6 +19,8 @@ app.conf.update(
     result_expires=3600,
 )
 
+app.conf.task_routes = {'dev_tasks.tasks.*': {'queue': 'dev_q'}}
+
 #------------------------------------------------------------
 
 @app.task
@@ -29,7 +32,7 @@ def add(x, y):
 @app.task
 def ping(name):
     # demo task to see if this can be reached from Django
-    return "pong " + name
+    return "ponggg " + name + " from " + current_task.request.hostname
 
 @app.task
 def dir(my_path):

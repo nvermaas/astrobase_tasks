@@ -11,5 +11,8 @@ def run_dir(my_path):
 # client program to test access to celery/broker
 if __name__ == '__main__':
     run_ping()
-    print(run_dir("/shared"))
+
+    # The astrobase data directory on the NAS is mounted as '/data' by the docker-compose.yml file
+    # /home/nvermaas/www/data_on_yggdrasil/astrobase/data:/data
+    print(run_dir("/data"))
     #print(run_dir("/data"))
