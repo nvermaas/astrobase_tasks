@@ -16,4 +16,8 @@ def get_jobs():
 # test the tasks
 if __name__ == '__main__':
     task = get_jobs.delay()
-    print(task.get(timeout=1))
+    try:
+        results = task.get(timeout=1)
+    except:
+        results = str("Timeout for run_dev_ping: is there a worker running for this queue?")
+    print(results)
