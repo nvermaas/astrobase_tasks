@@ -1,4 +1,4 @@
-from my_tasks import ping, dir
+from my_celery import ping, dir
 from dev_tasks.tasks import dev_ping, dev_dir
 from astro_tasks.tasks import get_jobs
 

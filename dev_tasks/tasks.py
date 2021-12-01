@@ -1,6 +1,6 @@
 from os import listdir
 from celery import current_task
-from my_tasks import app
+from my_celery import app
 
 @app.task
 def dev_ping(name):

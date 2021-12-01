@@ -1,6 +1,6 @@
 import os
 from celery import current_task
-from my_tasks import app
+from my_celery import app
 
 try:
     ASTROBASE_URL = os.environ['ASTROBASE_URL']
