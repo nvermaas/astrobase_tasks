@@ -7,6 +7,12 @@ except:
     #RABBITMQ_BROKER = "amqp://celery:celery@192.168.178.37:5672/celery"
     RABBITMQ_BROKER = "amqp://nvermaas:RaBbIt_2019@192.168.178.37:5672"
 
+# switch to dev mode in QUEUE_ASTRO is not set
+try:
+    QUEUE_ASTRO = os.environ['QUEUE_ASTRO']
+except:
+    QUEUE_ASTRO = 'dev_q'
+
 #
 app = Celery('my_celery',
              backend='rpc://',
@@ -22,5 +28,5 @@ app.conf.update(
 # for development, locally start the dev worker with 'my_dev_worker.bat'
 app.conf.task_routes = {
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
-    'astro_tasks.tasks.*': {'queue': 'astro'},
+    'astro_tasks.tasks.*': {'queue': QUEUE_ASTRO},
 }
