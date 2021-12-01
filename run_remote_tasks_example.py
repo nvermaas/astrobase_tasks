@@ -1,11 +1,11 @@
 from my_celery import app
 
 def run_ping():
-    task = app.send_task("my_celery.ping", kwargs=dict(name="my remote app"))
+    task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
     print(task.get())  # pong my remote app
 
 def run_dir(my_path):
-    task = app.send_task("my_celery.dir", kwargs=dict(my_path=my_path))
+    task = app.send_task("astro_tasks.tasks.dir", kwargs=dict(my_path=my_path))
     return(task.get())  # pong my remote app
 
 # client program to test access to celery/broker
