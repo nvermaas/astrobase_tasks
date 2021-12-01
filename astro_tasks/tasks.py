@@ -1,4 +1,5 @@
 import os
+from os import listdir
 from celery import current_task
 from my_celery import app
 
@@ -6,6 +7,18 @@ try:
     ASTROBASE_URL = os.environ['ASTROBASE_URL']
 except:
     ASTROBASE_URL = "http://localhost:8000/my_astrobase/"
+
+
+@app.task
+def ping(name):
+    # demo task to see if this can be reached from Django
+    return "ponggg " + name + " from " + current_task.request.hostname
+
+
+@app.task
+def dir(my_path):
+    return listdir(my_path)
+
 
 @app.task
 def get_jobs():

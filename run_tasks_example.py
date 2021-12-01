@@ -1,6 +1,6 @@
-from my_celery import ping, dir
+
 from dev_tasks.tasks import dev_ping, dev_dir
-from astro_tasks.tasks import get_jobs
+from astro_tasks.tasks import ping, dir, get_jobs
 
 def run_dev_ping(name):
     task = dev_ping.delay(name)
