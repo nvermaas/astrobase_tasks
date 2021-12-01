@@ -19,5 +19,5 @@ if __name__ == '__main__':
     try:
         results = task.get(timeout=1)
     except:
-        results = str("Timeout for run_dev_ping: is there a worker running for this queue?")
+        results = str("Timeout for get_jobs: is there a worker running for this queue?")
     print(results)

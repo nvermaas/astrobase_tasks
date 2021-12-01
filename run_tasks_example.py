@@ -1,12 +1,13 @@
 from my_tasks import ping, dir
 from dev_tasks.tasks import dev_ping, dev_dir
+from astro_tasks.tasks import get_jobs
 
 def run_dev_ping(name):
     task = dev_ping.delay(name)
     try:
         results = task.get(timeout=1)
     except:
-        results = str("Timeout for run_dev_ping: is there a worker running for this queue?")
+        results = str("Timeout for dev_ping: is there a worker running for this queue?")
     print(results)
 
 def run_ping(name):
@@ -14,7 +15,7 @@ def run_ping(name):
     try:
         results = task.get(timeout=1)
     except:
-        results = str("Timeout for run_ping: is there a worker running for this queue?")
+        results = str("Timeout for ping: is there a worker running for this queue?")
     print(results)
 
 def run_dev_dir(my_path):
@@ -22,7 +23,7 @@ def run_dev_dir(my_path):
     try:
         results = task.get(timeout=1)
     except:
-        results = str("Timeout for run_dev_dir: is there a worker running for this queue?")
+        results = str("Timeout for dev_dir: is there a worker running for this queue?")
     return results
 
 def run_dir(my_path):
@@ -30,9 +31,16 @@ def run_dir(my_path):
     try:
         results = task.get(timeout=1)
     except:
-        results = str("Timeout for run_dir: is there a worker running for this queue?")
+        results = str("Timeout for dir: is there a worker running for this queue?")
     return results
 
+def run_get_jobs():
+    task = get_jobs.delay()
+    try:
+        results = task.get(timeout=1)
+    except:
+        results = str("Timeout for get_jobs: is there a worker running for this queue?")
+    return results
 
 # client program to test access to celery/broker
 if __name__ == '__main__':
@@ -54,3 +62,6 @@ if __name__ == '__main__':
 
     my_dir = run_dir("/data")
     print("prod_dir: "+str(my_dir)) # ['090313004', '211122003', '210228002', '210222003', '200819007', '191120006', '200329002
+
+    my_jobs = run_get_jobs()
+    print("jobs: " + str(my_jobs))

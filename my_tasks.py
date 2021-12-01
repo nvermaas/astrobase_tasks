@@ -19,10 +19,10 @@ app.conf.update(
     result_expires=3600,
 )
 
-app.conf.task_routes = (
-    {'dev_tasks.tasks.*': {'queue': 'dev_q'}},
-    {'astro_tasks.tasks.*': {'queue': 'astro'}}
-)
+app.conf.task_routes = {
+    'dev_tasks.tasks.*': {'queue': 'dev_q'},
+    'astro_tasks.tasks.*': {'queue': 'astro'},
+}
 
 #------------------------------------------------------------
 
