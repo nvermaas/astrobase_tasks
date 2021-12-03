@@ -64,4 +64,4 @@ if __name__ == '__main__':
     print("prod_dir: "+str(my_dir)) # ['090313004', '211122003', '210228002', '210222003', '200819007', '191120006', '200329002
 
     my_jobs = run_get_jobs()
-    print("jobs: " + str(my_jobs))
+    print("get_jobs: " + str(my_jobs))
