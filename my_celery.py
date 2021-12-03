@@ -13,10 +13,16 @@ try:
 except:
     QUEUE_ASTRO = 'dev_q'
 
+try:
+    POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
+except:
+    POLLING_IN_SECONDS = 10
+
 #
 app = Celery('my_celery',
              backend='rpc://',
-             broker=RABBITMQ_BROKER)
+             broker=RABBITMQ_BROKER,
+             include=['astro_tasks.tasks','dev_tasks.tasks'])
 
 # Optional configuration, see the application user guide.
 app.conf.update(
@@ -30,3 +36,9 @@ app.conf.task_routes = {
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
     'astro_tasks.tasks.*': {'queue': QUEUE_ASTRO},
 }
+
+app.conf.beat_schedule = {
+  'refresh': {
+    'task': 'astro_tasks.tasks.get_jobs',
+    'schedule': POLLING_IN_SECONDS,
+}}

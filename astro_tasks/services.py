@@ -10,6 +10,8 @@ except:
     ASTROBASE_PASSWORD = "my_dev_client_2021"
 
 
+# add with   : http://localhost:8000/my_astrobase/run-command/?command=ping
+# check with : http://localhost:8000/my_astrobase/jobs/?queue=astro
 def get_number_of_jobs(jobs_queue):
     astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
     try:
