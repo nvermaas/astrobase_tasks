@@ -15,6 +15,12 @@ def get_number_of_jobs(jobs_queue):
     try:
         query = "status=new&queue=" + jobs_queue
         ids = astrobaseIO.astrobase_interface.do_GET_LIST(key='jobs:id', query=query)
+
+        # remove jobs
+        for id in ids:
+            print('delete job '+str(id))
+            astrobaseIO.astrobase_interface.do_DELETE('jobs', id)
+
     except:
         # nothing to do
         return
