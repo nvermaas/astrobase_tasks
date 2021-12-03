@@ -29,7 +29,7 @@ def run_dev_dir(my_path):
 def run_dir(my_path):
     task = dir.delay(my_path)
     try:
-        results = task.get(timeout=1)
+        results = task.get(timeout=5)
     except:
         results = str("Timeout for dir: is there a worker running for this queue?")
     return results
@@ -37,7 +37,7 @@ def run_dir(my_path):
 def run_get_jobs():
     task = get_jobs.delay()
     try:
-        results = task.get(timeout=1)
+        results = task.get(timeout=5)
     except:
         results = str("Timeout for get_jobs: is there a worker running for this queue?")
     return results
@@ -60,6 +60,7 @@ if __name__ == '__main__':
     my_dir = run_dev_dir(".")
     print("dev_dir: "+str(my_dir))
 
+    # prove that the remove '/data' directory can be accessed
     my_dir = run_dir("/data")
     print("prod_dir: "+str(my_dir)) # ['090313004', '211122003', '210228002', '210222003', '200819007', '191120006', '200329002
 

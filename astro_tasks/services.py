@@ -6,14 +6,14 @@ try:
     ASTROBASE_PASSWORD = os.environ['ASTROBASE_PASSWORD']
 except:
     ASTROBASE_URL = "http://localhost:8000/my_astrobase/"
-    ASTROBASE_USER = "nvermaas"
-    ASTROBASE_PASSWORD = "StErReN_2020"
+    ASTROBASE_USER = "dev_client"
+    ASTROBASE_PASSWORD = "my_dev_client_2021"
 
 
-def get_number_of_jobs(queue):
+def get_number_of_jobs(jobs_queue):
     astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
     try:
-        query = "status=new&queue=" + queue
+        query = "status=new&queue=" + jobs_queue
         ids = astrobaseIO.astrobase_interface.do_GET_LIST(key='jobs:id', query=query)
     except:
         # nothing to do
