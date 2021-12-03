@@ -16,9 +16,9 @@ except:
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
 except:
-    POLLING_IN_SECONDS = 10
+    POLLING_IN_SECONDS = 30
 
-#
+
 app = Celery('my_celery',
              backend='rpc://',
              broker=RABBITMQ_BROKER,
