@@ -27,11 +27,11 @@ def get_jobs():
 
     # get this function as empty as possible (because debugger doesn't work here).
     print(current_task.request.hostname)
-    return services.get_number_of_jobs('astro')
+    return services.get_jobs_from_astrobase('astro')
 
 
 def get_jobs_test():
-    return services.get_number_of_jobs('astro')
+    return services.get_jobs_from_astrobase('astro')
 
 
 # client program to test access to celery/broker

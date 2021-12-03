@@ -12,7 +12,7 @@ except:
 
 # add with   : http://localhost:8000/my_astrobase/run-command/?command=ping
 # check with : http://localhost:8000/my_astrobase/jobs/?queue=astro
-def get_number_of_jobs(jobs_queue):
+def get_jobs_from_astrobase(jobs_queue):
     astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
     try:
         query = "status=new&queue=" + jobs_queue

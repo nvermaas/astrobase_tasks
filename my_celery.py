@@ -16,7 +16,7 @@ except:
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
 except:
-    POLLING_IN_SECONDS = 30
+    POLLING_IN_SECONDS = 15
 
 
 app = Celery('my_celery',
