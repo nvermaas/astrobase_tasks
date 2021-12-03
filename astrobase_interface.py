@@ -189,7 +189,7 @@ class AstroBase:
         resource = params[0]
         field = params[1]
 
-        url = self.host + resource + "?" + str(query)
+        url = self.host + resource + "/?" + str(query)
         # self.verbose_print("url = " + url)
 
         response = requests.request("GET", url, headers=self.header)

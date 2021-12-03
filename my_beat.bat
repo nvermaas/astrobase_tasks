@@ -1,0 +1,1 @@
+celery -A astro_tasks.tasks beat -l info
