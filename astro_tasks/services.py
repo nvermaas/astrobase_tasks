@@ -30,19 +30,23 @@ def get_jobs_from_astrobase(jobs_queue):
 
         # remove jobs
         for id in ids:
-            tasks.handle_job.delay(id)
-            #handle_job(astrobaseIO,id)
+            try:
+                task = tasks.handle_job.delay(str(id)).get()
+            except Exception as error:
+                # something went wrong with this task, continue with the next one
+                print(str(error))
 
-    except:
+    except Exception as error:
         # nothing to do
+        print(str(error))
         return
-    result = ids
-    return result
+
+    return ids
 
 
 # receive the job and handle it based on the 'command' parameter.
 def handle_job(id):
-
+    print('services.handle_job('+id+')')
     astrobaseIO.astrobase_interface.do_PUT(key='jobs:status', id=id, taskid=None, value="handling")
     command = astrobaseIO.astrobase_interface.do_GET(key='jobs:command', id=id, taskid=None)
     params = astrobaseIO.astrobase_interface.do_GET(key='jobs:parameters', id=id, taskid=None)
