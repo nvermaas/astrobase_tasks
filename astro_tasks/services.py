@@ -1,6 +1,7 @@
 import os
 from astrobase_io import AstroBaseIO
 from . import fits
+from . import tasks
 
 try:
     # production mode
@@ -15,11 +16,12 @@ except:
     ASTROBASE_PASSWORD = "my_dev_client_2021"
     LOCAL_DATA_DIR = 'd:\my_astrobase\data'
 
+astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 
 # add with   : http://localhost:8000/my_astrobase/run-command/?command=ping
 # check with : http://localhost:8000/my_astrobase/jobs/?queue=astro
 def get_jobs_from_astrobase(jobs_queue):
-    astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
+    #astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
     try:
         query = "status=new&queue=" + jobs_queue
         # todo: don't just return id's, but also the other parameters in a single request
@@ -27,7 +29,8 @@ def get_jobs_from_astrobase(jobs_queue):
 
         # remove jobs
         for id in ids:
-            handle_job(astrobaseIO,id)
+            tasks.handle_job(id)
+            #handle_job(astrobaseIO,id)
 
     except:
         # nothing to do
@@ -37,7 +40,7 @@ def get_jobs_from_astrobase(jobs_queue):
 
 
 # receive the job and handle it based on the 'command' parameter.
-def handle_job(astrobaseIO,id):
+def handle_job(id):
 
     astrobaseIO.astrobase_interface.do_PUT(key='jobs:status', id=id, taskid=None, value="handling")
     command = astrobaseIO.astrobase_interface.do_GET(key='jobs:command', id=id, taskid=None)
@@ -103,8 +106,5 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
             astrobaseIO.astrobase_interface.do_PUT(key='cutouts:visible', id=filename, value="false")
             astrobaseIO.astrobase_interface.do_PUT(key='cutouts:status', id=filename, value="job_failed")
 
-            # remove the attempted cutouts that failed from the database
-            # astrobaseIO.astrobase_interface.do_DELETE(resource='cutouts', id=filename)
-
-            # throw the exception again to be handled upstream
             raise error
+

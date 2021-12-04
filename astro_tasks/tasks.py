@@ -34,6 +34,13 @@ def get_jobs_test():
     return services.get_jobs_from_astrobase('astro')
 
 
+@app.task
+def handle_job(id):
+    # handle a job as a new celery task
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_job(id)
+
+
 # client program to test access to celery/broker
 if __name__ == '__main__':
 
