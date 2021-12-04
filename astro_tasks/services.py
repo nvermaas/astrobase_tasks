@@ -21,7 +21,7 @@ astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 # add with   : http://localhost:8000/my_astrobase/run-command/?command=ping
 # check with : http://localhost:8000/my_astrobase/jobs/?queue=astro
 def get_jobs_from_astrobase(jobs_queue):
-    #astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
+
     try:
         query = "status=new&queue=" + jobs_queue
         # todo: don't just return id's, but also the other parameters in a single request
@@ -31,7 +31,7 @@ def get_jobs_from_astrobase(jobs_queue):
         # remove jobs
         for id in ids:
             try:
-                task = tasks.handle_job.delay(str(id)).get()
+                tasks.handle_job.delay(str(id))
             except Exception as error:
                 # something went wrong with this task, continue with the next one
                 print(str(error))
