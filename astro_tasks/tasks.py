@@ -36,6 +36,14 @@ def get_jobs_test():
 
 @app.task
 def handle_job(id):
+    print('tasks.handle_job()')
+    # handle a job as a new celery task
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_job(id)
+
+
+def handle_job_test(id):
+    print('tasks.handle_job()')
     # handle a job as a new celery task
     # get this function as empty as possible (because debugger doesn't work here).
     return services.handle_job(id)
@@ -49,4 +57,6 @@ if __name__ == '__main__':
 
     # execute my_astro_worker.bat to start a local worker, then run/debug this file
     ids = get_jobs_test()
-    print(ids)
+
+    #handle_job_test(105)
+    print('run has finished')

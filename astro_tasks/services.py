@@ -26,10 +26,11 @@ def get_jobs_from_astrobase(jobs_queue):
         query = "status=new&queue=" + jobs_queue
         # todo: don't just return id's, but also the other parameters in a single request
         ids = astrobaseIO.astrobase_interface.do_GET_LIST(key='jobs:id', query=query)
+        astrobaseIO.report("*jobs* : handling " + str(ids), "print")
 
         # remove jobs
         for id in ids:
-            tasks.handle_job(id)
+            tasks.handle_job.delay(id)
             #handle_job(astrobaseIO,id)
 
     except:
@@ -47,7 +48,7 @@ def handle_job(id):
     params = astrobaseIO.astrobase_interface.do_GET(key='jobs:parameters', id=id, taskid=None)
     extra = astrobaseIO.astrobase_interface.do_GET(key='jobs:extra', id=id, taskid=None)
 
-    astrobaseIO.report("*jobs* : executing " + command, "slack")
+    astrobaseIO.report("*jobs* : executing " + command, "print")
     # execute the command
     try:
         do_execute_command(astrobaseIO, command, params, extra, LOCAL_DATA_DIR)
@@ -57,14 +58,14 @@ def handle_job(id):
 
         # remove job
         astrobaseIO.astrobase_interface.do_DELETE('jobs', id)
-        astrobaseIO.report("*jobs* : job " + str(id) + " done", "slack")
+        astrobaseIO.report("*jobs* : job " + str(id) + " done", "print")
 
     except Exception as error:
 
         print(str(error))
         #astrobaseIO.astrobase_interface.do_PUT(key='jobs:result', id=id, taskid=None, value=str(error))
         #astrobaseIO.astrobase_interface.do_PUT(key='jobs:status', id=id, taskid=None, value="error")
-        astrobaseIO.report("*jobs* : job " + str(id) + " - " + str(error), "slack")
+        astrobaseIO.report("*jobs* : job " + str(id) + " - " + str(error), "print")
 
         # be stern, if a job fails, delete it.
         astrobaseIO.astrobase_interface.do_DELETE('jobs', id)
