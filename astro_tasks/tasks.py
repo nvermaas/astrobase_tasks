@@ -39,5 +39,7 @@ if __name__ == '__main__':
 
     # use this to test/debug functionality in services,
     # because the debugger doesn't work with @app.tasks
-    number_of_jobs = get_jobs_test()
-    print(number_of_jobs)
+
+    # execute my_astro_worker.bat to start a local worker, then run/debug this file
+    ids = get_jobs_test()
+    print(ids)
