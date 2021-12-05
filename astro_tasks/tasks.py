@@ -22,6 +22,16 @@ def dir(my_path):
 
 
 @app.task
+def handle_job(id):
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_job(id)
+
+def handle_job_test(id):
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_job(id)
+
+
+@app.task
 def get_jobs():
     # look for pending jobs in astrobase
 
@@ -32,14 +42,6 @@ def get_jobs_test():
     return services.get_jobs_from_astrobase('astro')
 
 
-@app.task
-def handle_job(id):
-    # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_job(id)
-
-def handle_job_test(id):
-    # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_job(id)
 
 
 # client program to test access to celery/broker
