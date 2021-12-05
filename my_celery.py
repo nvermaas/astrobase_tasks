@@ -1,5 +1,6 @@
 import os
 from celery import Celery
+import astro_tasks
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
@@ -44,5 +45,5 @@ app.conf.beat_schedule = {
     'schedule': POLLING_IN_SECONDS,
 }}
 
-app.autodiscover_tasks(force=True)
-app.autodiscover_tasks(['astro_tasks.tasks.ping1'])
+#app.autodiscover_tasks()
+app.autodiscover_tasks(['astro_tasks'])
