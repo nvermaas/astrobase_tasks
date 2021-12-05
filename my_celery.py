@@ -33,8 +33,8 @@ app.conf.update(
 # there is only 1 remote worker started, for 'astro_tasks.task'.
 # for development, locally start the dev worker with 'my_dev_worker.bat'
 app.conf.task_routes = {
+    'astro_tasks.tasks.*': {'queue': 'astro'},
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
-    'astro_tasks.tasks.*': {'queue': QUEUE_ASTRO},
 }
 
 app.conf.beat_schedule = {
