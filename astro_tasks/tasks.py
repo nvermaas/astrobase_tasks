@@ -15,7 +15,7 @@ def ping(name):
     # demo task to see if this can be reached from Django
     return "ponggg " + name + " from " + str(current_task.request.hostname)
 
-@app.task
+@app.task(name='astro_task.tasks.ping2')
 def ping2(name):
     # demo task to see if this can be reached from Django
     return "ponggg " + name + " from " + str(current_task.request.hostname)
