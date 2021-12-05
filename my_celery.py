@@ -4,7 +4,6 @@ from celery import Celery
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
 except:
-    #RABBITMQ_BROKER = "amqp://celery:celery@192.168.178.37:5672/celery"
     RABBITMQ_BROKER = "amqp://nvermaas:RaBbIt_2019@192.168.178.37:5672"
 
 # switch to dev mode in QUEUE_ASTRO is not set
@@ -16,7 +15,7 @@ except:
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
 except:
-    POLLING_IN_SECONDS = 15
+    POLLING_IN_SECONDS = 30
 
 
 app = Celery('my_celery',
@@ -26,14 +25,14 @@ app = Celery('my_celery',
 
 # Optional configuration, see the application user guide.
 app.conf.update(
-    result_expires=3600,
+    result_expires=60,
 )
 
 # all astro_tasks go to the queue 'astro'.
 # there is only 1 remote worker started, for 'astro_tasks.task'.
 # for development, locally start the dev worker with 'my_dev_worker.bat'
 app.conf.task_routes = {
-    'astro_tasks.tasks.*': {'queue': 'astro'},
+    'astro_tasks.tasks.*': {'queue': QUEUE_ASTRO},
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
 }
 
