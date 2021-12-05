@@ -11,6 +11,7 @@ try:
     QUEUE_ASTRO = os.environ['QUEUE_ASTRO']
 except:
     QUEUE_ASTRO = 'dev_q'
+    #QUEUE_ASTRO = 'astro'
 
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
@@ -33,6 +34,7 @@ app.conf.update(
 # for development, locally start the dev worker with 'my_dev_worker.bat'
 app.conf.task_routes = {
     'astro_tasks.tasks.*': {'queue': QUEUE_ASTRO},
+    #'astro_tasks.tasks.*': {'queue': 'astro'},
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
 }
 

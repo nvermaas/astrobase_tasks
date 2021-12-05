@@ -253,8 +253,7 @@ class AstroBase:
             self.do_print("[PUT " + response.url + "]")
             self.do_print("Response: " + str(response.status_code) + ", " + str(response.reason))
         except:
-            raise (Exception(
-                "ERROR: " + str(response.status_code) + ", " + str(response.reason) + ', ' + str(response.content)))
+            raise (Exception("ERROR: in do_PUT to " + url))
 
 
     # do_PUT_LIST(key = observations:new_status, taskid = 180223003, value = valid)

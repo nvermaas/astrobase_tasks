@@ -18,4 +18,4 @@ if __name__ == '__main__':
     #print(remote_dir("/data"))
     # The astrobase data directory on the NAS is mounted as '/data' by the docker-compose.yml file
     # /home/nvermaas/www/data_on_yggdrasil/astrobase/data:/data
-    print(remote_get_jobs())
+    #print(remote_get_jobs())
