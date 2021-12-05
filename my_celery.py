@@ -25,6 +25,8 @@ app = Celery('my_celery',
              broker=RABBITMQ_BROKER,
              include=['astro_tasks.tasks','dev_tasks.tasks'])
 
+app.autodiscover_tasks(['astro_tasks','dev_tasks'])
+
 # Optional configuration, see the application user guide.
 app.conf.update(
     result_expires=60,
@@ -45,5 +47,3 @@ app.conf.beat_schedule = {
     'schedule': POLLING_IN_SECONDS,
 }}
 
-#app.autodiscover_tasks()
-app.autodiscover_tasks(['astro_tasks'])
