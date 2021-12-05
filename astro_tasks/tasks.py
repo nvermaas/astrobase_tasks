@@ -11,7 +11,7 @@ except:
 
 
 @app.task
-def ping(name):
+def ping1(name):
     # demo task to see if this can be reached from Django
     return "ponggg " + name + " from " + str(current_task.request.hostname)
 
