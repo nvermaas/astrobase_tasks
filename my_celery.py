@@ -12,7 +12,7 @@ try:
     QUEUE_ASTRO = os.environ['QUEUE_ASTRO']
 except:
     QUEUE_ASTRO = 'dev_q'
-    #QUEUE_ASTRO = 'astro'
+    QUEUE_ASTRO = 'astro'
 
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
