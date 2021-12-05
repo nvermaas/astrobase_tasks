@@ -53,7 +53,8 @@ if __name__ == '__main__':
     #ids = get_jobs_test()
 
     #handle_job_test("335")
-
+    task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
+    print(task.get())  # pong my remote app
     task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="335"))
     print(task.get())  # pong my remote app
 
