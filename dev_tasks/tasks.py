@@ -8,5 +8,5 @@ def dev_ping(name):
     return "dev_ponggg " + name + " from " + current_task.request.hostname
 
 @app.task
-def dev_dir(my_path):
+def dev_dir2(my_path):
     return listdir(my_path)

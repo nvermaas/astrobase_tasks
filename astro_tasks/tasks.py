@@ -15,6 +15,10 @@ def ping(name):
     # demo task to see if this can be reached from Django
     return "ponggg " + name + " from " + str(current_task.request.hostname)
 
+@app.task
+def ping2(name):
+    # demo task to see if this can be reached from Django
+    return "ponggg " + name + " from " + str(current_task.request.hostname)
 
 @app.task
 def dir(my_path):
