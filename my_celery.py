@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-import astro_tasks
+import astro_tasks, dev_tasks
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
