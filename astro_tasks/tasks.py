@@ -56,6 +56,7 @@ if __name__ == '__main__':
     # because the debugger doesn't work with @app.tasks
 
     # execute my_astro_worker.bat to start a local worker, then run/debug this file
+    # this works, all jobs are delivered at once... (then handled 1 by 1)
     ids = get_jobs_test()
 
     #handle_job_test(105)
