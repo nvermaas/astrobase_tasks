@@ -1,1 +1,1 @@
-celery -A my_tasks worker --pool=solo -l info
+celery -A astro_tasks.tasks worker --pool=solo -l info -Q astro
