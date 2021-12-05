@@ -59,11 +59,15 @@ if __name__ == '__main__':
     #ids = get_jobs_test()
 
     #handle_job_test("335")
+    task = app.send_task("astro_tasks.tasks.get_jobs")
+    print(task.get())
+
     task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
     print(task.get())  # pong my remote app
-    task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="340"))
-    task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="341"))
-    task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="342"))
-    print(task.get())
+
+    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="346"))
+    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="347"))
+    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="348"))
+    # print(task.get())
 
     print('run has finished')
