@@ -45,3 +45,4 @@ app.conf.beat_schedule = {
 }}
 
 app.autodiscover_tasks(force=True)
+app.autodiscover_tasks(['ping1'])
