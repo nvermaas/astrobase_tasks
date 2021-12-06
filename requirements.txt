@@ -1,8 +1,8 @@
 #celery==4.2.1
 celery==5.1.2
 eventlet==0.33.0
-requests
-astropy
-numpy
-Pillow
-astroquery
+requests==2.20.0
+astropy==4.0
+numpy==1.18.1
+Pillow==8.0.1
+#astroquery
