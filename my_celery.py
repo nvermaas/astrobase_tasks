@@ -1,8 +1,8 @@
 import os
 from celery import Celery
 import astro_tasks, dev_tasks
-from astro_tasks import tasks
-from dev_tasks import tasks
+#from astro_tasks import tasks
+#from dev_tasks import tasks
 
 
 try:
