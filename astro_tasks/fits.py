@@ -119,6 +119,7 @@ def draw_minutes_grid(wcs, draw, scale, ra, dec, ra_labels, dec_labels, step, fr
 def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, title, grid_type="degrees"):
 
     try:
+        print("draw_grid on "+path_to_input_image_file)
         wcs, width, height, ra_reference, dec_reference = get_world_coordinate_system(path_to_fits_file)
 
         # use the astropy WCS package to convert pixel to world coordinates
@@ -136,7 +137,14 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
         constellation = coord.get_constellation()
 
         print('open('+path_to_input_image_file+')')
-        im = Image.open(path_to_input_image_file)
+        try:
+            im = Image.open(path_to_input_image_file)
+        except:
+            error = "ERROR: " + path_to_input_image_file + ' not found'
+            print(error)
+            raise (Exception(error))
+
+        print('opened')
         im_new = im.copy()
         draw = ImageDraw.Draw(im_new)
 
@@ -498,7 +506,7 @@ def image_cutout(path_to_fits_file, path_to_input_image_file, path_to_output_ima
     try:
         im = Image.open(path_to_input_image_file)
     except:
-        raise (Exception("ERROR: " + path_to_output_image_file + ' not found'))
+        raise (Exception("ERROR: " + path_to_input_image_file + ' not found'))
 
     im_new = im.copy()
     draw = ImageDraw.Draw(im_new, 'RGBA')
