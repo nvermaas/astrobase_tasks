@@ -68,7 +68,7 @@ if __name__ == '__main__':
     task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
     print(task.get())  # pong my remote app
 
-    task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
+    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="347"))
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="348"))
     # print(task.get())

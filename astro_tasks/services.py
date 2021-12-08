@@ -81,6 +81,7 @@ def create_dataproduct(path_to_grid_file, filename, dp_type):
     dp = filename + "#"+dp_type+"#ready#" + str(size)
     return dp
 
+
 def add_dataproduct(astrobaseIO, taskid, dataproducts_string):
     """
     add dataproduct as a batch to a given observation

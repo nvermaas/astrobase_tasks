@@ -150,15 +150,15 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
         # scale the font based on the image size
         scale = int(width/ 60)
-
+        print('load fonts')
         try:
             # localhost
             font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
             font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
         except:
             # production
-            font_title = ImageFont.truetype("home/nvermaas/www/astrobase", scale * 2, encoding="unic")
-            font_subtitle = ImageFont.truetype("home/nvermaas/www/astrobase", scale, encoding="unic")
+            font_title = ImageFont.truetype("data/arial.ttf", scale * 2, encoding="unic")
+            font_subtitle = ImageFont.truetype("data/arial.ttf", scale, encoding="unic")
 
         text_start_x = scale * 2
         text_start_y = scale * 2
