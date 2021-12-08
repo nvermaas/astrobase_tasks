@@ -15,11 +15,6 @@ def ping(name):
     # demo task to see if this can be reached from Django
     return "ponggg " + name + " from " + str(current_task.request.hostname)
 
-@app.task(name='astro_task.tasks.ping2')
-def ping2(name):
-    # demo task to see if this can be reached from Django
-    return "ponggg " + name + " from " + str(current_task.request.hostname)
-
 @app.task
 def dir(my_path):
     return listdir(my_path)
@@ -34,16 +29,24 @@ def handle_job_test(id):
     # get this function as empty as possible (because debugger doesn't work here).
     return services.handle_job(id)
 
+@app.task
+def handle_cutout(id):
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_job(id)
+
+def handle_cutout_test(id):
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_job(id)
 
 @app.task
 def get_jobs():
     # look for pending jobs in astrobase
 
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.get_jobs_from_astrobase('astro')
+    return services.get_jobs_from_astrobase('celery')
 
 def get_jobs_test():
-    return services.get_jobs_from_astrobase('astro')
+    return services.get_jobs_from_astrobase('celery')
 
 
 
@@ -59,13 +62,13 @@ if __name__ == '__main__':
     #ids = get_jobs_test()
 
     #handle_job_test("335")
-    task = app.send_task("astro_tasks.tasks.get_jobs")
-    print(task.get())
+    #task = app.send_task("astro_tasks.tasks.get_jobs")
+    #print(task.get())
 
     task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
     print(task.get())  # pong my remote app
 
-    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="346"))
+    task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="488"))
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="347"))
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="348"))
     # print(task.get())

@@ -10,13 +10,6 @@ try:
 except:
     RABBITMQ_BROKER = "amqp://nvermaas:RaBbIt_2019@192.168.178.37:5672"
 
-# switch to dev mode in QUEUE_ASTRO is not set
-try:
-    QUEUE_ASTRO = os.environ['QUEUE_ASTRO']
-except:
-    QUEUE_ASTRO = 'dev_q'
-    QUEUE_ASTRO = 'astro'
-
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
 except:
@@ -25,8 +18,7 @@ except:
 
 app = Celery('my_celery',
              backend='rpc://',
-             broker=RABBITMQ_BROKER,
-             include=['astro_tasks.tasks','dev_tasks.tasks'])
+             broker=RABBITMQ_BROKER)
 
 app.autodiscover_tasks(['astro_tasks','dev_tasks'])
 
@@ -39,8 +31,8 @@ app.conf.update(
 # there is only 1 remote worker started, for 'astro_tasks.task'.
 # for development, locally start the dev worker with 'my_dev_worker.bat'
 app.conf.task_routes = {
-    'astro_tasks.tasks.*': {'queue': QUEUE_ASTRO},
-    #'astro_tasks.tasks.*': {'queue': 'astro'},
+    'astro_tasks.tasks.*': {'queue': 'astro'},
+    'astro_tasks.tasks.handle_cutout': {'queue': 'cutout'},
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
 }
 

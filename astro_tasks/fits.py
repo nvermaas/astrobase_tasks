@@ -116,7 +116,7 @@ def draw_minutes_grid(wcs, draw, scale, ra, dec, ra_labels, dec_labels, step, fr
         draw.text((x1+10, y1), dec_string, (255, 255, 0),font=font)
 
 
-def get_wcs_gridlines(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, title, grid_type="degrees"):
+def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_file, title, grid_type="degrees"):
 
     try:
         wcs, width, height, ra_reference, dec_reference = get_world_coordinate_system(path_to_fits_file)
