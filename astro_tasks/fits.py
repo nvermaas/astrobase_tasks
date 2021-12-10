@@ -2,7 +2,6 @@ import os
 import math
 import json
 from astropy.io import fits
-from astropy.io.fits import tabledump
 from astropy.wcs import WCS
 from astropy.coordinates import SkyCoord, get_constellation
 from astropy.coordinates import Angle, Latitude, Longitude  # Angles
@@ -150,28 +149,19 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
         # scale the font based on the image size
         scale = int(width/ 60)
-        print('load fonts')
-        try:
-            # localhost
-            font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
-            font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
-        except:
-            # production
-            font_title = ImageFont.truetype("data/arial.ttf", scale * 2, encoding="unic")
-            font_subtitle = ImageFont.truetype("data/arial.ttf", scale, encoding="unic")
+
+        font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
+        font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
 
         text_start_x = scale * 2
         text_start_y = scale * 2
         line_spacing = int(scale*2*0.7)
 
         draw.text((text_start_x, text_start_y), title, (255, 255, 255),font=font_title)
-        #draw.text((text_start_x, text_start_y), title, (255, 255, 255),font=font_title)
-        # draw.text((text_start_x, text_start_y + (2 * scale)), constellation, (255, 255, 255),font=font_subtitle)
 
-        # draw.text((text_start_x, text_start_y + line_spacing*2), title, (255, 255, 255),font=font_subtitle)
         s1 = round(ra_reference,0)
         s2 = round(dec_reference,0)
-        location = 'RA,dec = ' + str(s1) + ',' + str(s2)
+        location = 'RA,Dec = ' + str(s1) + ',' + str(s2)
         draw.text((text_start_x, text_start_y + line_spacing*2), location, (255, 255, 255),font=font_subtitle)
 
         draw_sky_cross(wcs, draw, s1, s2, int(scale / 2), width=int(scale / 5), fill=(255, 0, 0), frame='icrs')
@@ -218,8 +208,7 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
                 except:
                     pass
 
-            # save result
-        #path_to_new_file = path_to_image_file.replace(".", "_grid.")
+        # save result
         path_to_new_file = path_to_output_image_file
 
         if grid_type == "equatorial":
@@ -452,14 +441,8 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
         im_new = im.copy()
         draw = ImageDraw.Draw(im_new, 'RGBA')
 
-        try:
-            # localhost
-            font_title = ImageFont.truetype("arial.ttf", 50, encoding="unic")
-            font_ticks = ImageFont.truetype("arial.ttf", 25, encoding="unic")
-        except:
-            # production
-            font_title = ImageFont.truetype("home/nvermaas/www/astrobase", 50, encoding="unic")
-            font_ticks = ImageFont.truetype("home/nvermaas/www/astrobase", 25, encoding="unic")
+        font_title = ImageFont.truetype("arial.ttf", 50, encoding="unic")
+        font_ticks = ImageFont.truetype("arial.ttf", 25, encoding="unic")
 
         list_of_symbols = json.loads(extra)
         for symbol in list_of_symbols:

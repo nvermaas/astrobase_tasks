@@ -151,6 +151,113 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         astrobaseIO.astrobase_interface.do_PUT(key='observations2:dec_max', id=None, taskid=observation_dir, value=str(dec_max))
         astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_dec_fov', id=None, taskid=observation_dir, value=fov)
 
+
+    if command == "stars":
+        list = params.split(',')
+        observation_dir = list[0]
+        astrometry_job = list[1]
+
+        # construct path's based on 'observation_dir:fits_file:image_file'
+        # 201023011,4660627.fits,4660627_annotated.jpg
+
+        path_to_fits = os.path.join(local_data_dir,observation_dir)
+        path_to_stars_file, max_magnitude = fits.get_stars(path_to_fits=path_to_fits, astrometry_job=astrometry_job)
+
+        directory, file = os.path.split(path_to_stars_file)
+        dp = create_dataproduct(path_to_stars_file,file, "annotated_stars")
+
+        add_dataproduct(astrobaseIO, observation_dir, dp)
+        magnitude = astrobaseIO.astrobase_interface.do_GET(key='observations2:magnitude', id=None, taskid=observation_dir)
+        if not magnitude:
+            astrobaseIO.astrobase_interface.do_PUT(key='observations2:magnitude', id=None, taskid=observation_dir, value=max_magnitude)
+
+
+    # read min/max ra and dec from fits and store in database
+    if command == "box":
+        # expected parameters:
+        # params = [taskid,path_to_fits]
+
+        list = params.split(',')
+        taskid = list[0]
+        fits_file = list[1]
+        path_to_fits_file = os.path.join(local_data_dir, os.path.join(taskid, fits_file))
+
+        box = fits.get_box(path_to_fits_file)
+        astrobaseIO.astrobase_interface.do_PUT(key='observations2:box', id=None, taskid=taskid, value=box)
+
+    if command == "draw_extra":
+        list = params.split(',')
+        observation_dir = list[0]
+        fits_file = list[1]
+        input_image_file = list[2]
+        output_image_file = list[3]
+
+         # construct path's based on 'observation_dir:fits_file:image_file'
+        # 201023011,4660627.fits,4660627_annotated.jpg
+
+        path_to_fits_file = os.path.join(local_data_dir,os.path.join(observation_dir, fits_file))
+        path_to_input_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, input_image_file))
+        path_to_output_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, output_image_file))
+
+        # draw on image file
+        fits.draw_extra(path_to_fits_file=path_to_fits_file,
+                        path_to_input_image_file=path_to_input_image_file,
+                        path_to_output_image_file=path_to_output_image_file,
+                        extra=extra)
+
+
+    if command == "transient":
+        list = params.split(',')
+        observation_dir = list[0]
+        fits_file = list[1]
+        input_image_file = list[2]
+        output_image_file = list[3]
+
+         # construct path's based on 'observation_dir:fits_file:image_file'
+        # 201023011,4660627.fits,4660627_annotated.jpg
+
+        path_to_fits_file = os.path.join(local_data_dir,os.path.join(observation_dir, fits_file))
+        path_to_input_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, input_image_file))
+        path_to_output_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, output_image_file))
+
+        # draw on image file
+        path_to_new_file = fits.draw_extra(path_to_fits_file=path_to_fits_file,
+                        path_to_input_image_file=path_to_input_image_file,
+                        path_to_output_image_file=path_to_output_image_file,
+                        extra=extra)
+
+        directory, file = os.path.split(path_to_new_file)
+        dp = create_dataproduct(path_to_new_file,file, "annotated_transient")
+
+        add_dataproduct(astrobaseIO, observation_dir, dp)
+
+
+    if command == "exoplanets":
+        list = params.split(',')
+        observation_dir = list[0]
+        fits_file = list[1]
+        input_image_file = list[2]
+        output_image_file = list[3]
+
+         # construct path's based on 'observation_dir:fits_file:image_file'
+        # 201023011,4660627.fits,4660627_annotated.jpg
+
+        path_to_fits_file = os.path.join(local_data_dir,os.path.join(observation_dir, fits_file))
+        path_to_input_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, input_image_file))
+        path_to_output_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, output_image_file))
+
+        # draw on image file
+        path_to_new_file = fits.draw_extra(path_to_fits_file=path_to_fits_file,
+                        path_to_input_image_file=path_to_input_image_file,
+                        path_to_output_image_file=path_to_output_image_file,
+                        extra=extra)
+
+        directory, file = os.path.split(path_to_new_file)
+        dp = create_dataproduct(path_to_new_file,file, "annotated_exoplanets")
+
+        add_dataproduct(astrobaseIO, observation_dir, dp)
+
+
     if command == "image_cutout":
         list = params.split(',')
         observation_dir = list[0]
