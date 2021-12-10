@@ -149,19 +149,26 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
 
         # scale the font based on the image size
         scale = int(width/ 60)
-
-        font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
-        font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
+        print('load fonts')
+        try:
+            font_title = ImageFont.truetype("arial.ttf", scale * 2, encoding="unic")
+            font_subtitle = ImageFont.truetype("arial.ttf", scale, encoding="unic")
+        except:
+            font_title = ImageFont.truetype("data/arial.ttf", scale * 2, encoding="unic")
+            font_subtitle = ImageFont.truetype("data/arial.ttf", scale, encoding="unic")
 
         text_start_x = scale * 2
         text_start_y = scale * 2
         line_spacing = int(scale*2*0.7)
 
         draw.text((text_start_x, text_start_y), title, (255, 255, 255),font=font_title)
+        #draw.text((text_start_x, text_start_y), title, (255, 255, 255),font=font_title)
+        # draw.text((text_start_x, text_start_y + (2 * scale)), constellation, (255, 255, 255),font=font_subtitle)
 
+        # draw.text((text_start_x, text_start_y + line_spacing*2), title, (255, 255, 255),font=font_subtitle)
         s1 = round(ra_reference,0)
         s2 = round(dec_reference,0)
-        location = 'RA,Dec = ' + str(s1) + ',' + str(s2)
+        location = 'RA,dec = ' + str(s1) + ',' + str(s2)
         draw.text((text_start_x, text_start_y + line_spacing*2), location, (255, 255, 255),font=font_subtitle)
 
         draw_sky_cross(wcs, draw, s1, s2, int(scale / 2), width=int(scale / 5), fill=(255, 0, 0), frame='icrs')
@@ -208,7 +215,8 @@ def draw_grid(path_to_fits_file, path_to_input_image_file, path_to_output_image_
                 except:
                     pass
 
-        # save result
+            # save result
+        #path_to_new_file = path_to_image_file.replace(".", "_grid.")
         path_to_new_file = path_to_output_image_file
 
         if grid_type == "equatorial":
