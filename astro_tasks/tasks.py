@@ -2,7 +2,7 @@ import os
 from os import listdir
 from celery import current_task
 from my_celery import app, VERSION
-from astro_tasks import services
+from astro_tasks import jobs_controller, registration_controller
 
 try:
     ASTROBASE_URL = os.environ['ASTROBASE_URL']
@@ -28,45 +28,46 @@ def version():
 @app.task
 def handle_job(id):
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_job(id)
+    return jobs_controller.handle_job(id)
 
 def handle_job_test(id):
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_job(id)
+    return jobs_controller.handle_job(id)
 
 @app.task
 def handle_cutout(id):
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_job(id)
+    return jobs_controller.handle_job(id)
 
 def handle_cutout_test(id):
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_job(id)
+    return jobs_controller.handle_job(id)
 
 @app.task
 def get_jobs():
-    # look for pending jobs in astrobase
+    # look for pending jobs for the celery service in astrobase
 
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.get_jobs_from_astrobase('celery')
+    return jobs_controller.get_jobs_from_astrobase('celery')
 
 def get_jobs_test():
-    return services.get_jobs_from_astrobase('celery')
+    return jobs_controller.get_jobs_from_astrobase('celery')
+
 
 @app.task
 def registration():
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_registration()
+    return registration_controller.handle_registration()
 
 def registration_test():
     # get this function as empty as possible (because debugger doesn't work here).
-    return services.handle_registration()
+    return registration_controller.handle_registration()
 
 
 # client program to test access to celery/broker
 if __name__ == '__main__':
 
-    # use this to test/debug functionality in services,
+    # use this to test/debug functionality in jobs_controller,
     # because the debugger doesn't work with @app.tasks
 
     # execute my_astro_worker.bat to start a local worker, then run/debug this file

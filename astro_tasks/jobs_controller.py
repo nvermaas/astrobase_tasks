@@ -1,6 +1,6 @@
 import os
 from astrobase_io import AstroBaseIO
-from . import fits
+from . import fits_imaging
 from . import tasks
 
 try:
@@ -135,7 +135,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         path_to_output_image_file = os.path.join(local_data_dir, os.path.join(observation_dir, output_image_file))
 
         path_to_grid_file, ra_min, ra_max, dec_min, dec_max, fov = \
-            fits.draw_grid(path_to_fits_file=path_to_fits_file,
+            fits_imaging.draw_grid(path_to_fits_file=path_to_fits_file,
                            path_to_input_image_file=path_to_input_image_file,
                            path_to_output_image_file=path_to_output_image_file,
                            title=title, grid_type=grid_type)
@@ -163,7 +163,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         # 201023011,4660627.fits,4660627_annotated.jpg
 
         path_to_fits = os.path.join(local_data_dir,observation_dir)
-        path_to_stars_file, max_magnitude = fits.get_stars(path_to_fits=path_to_fits, astrometry_job=astrometry_job)
+        path_to_stars_file, max_magnitude = fits_imaging.get_stars(path_to_fits=path_to_fits, astrometry_job=astrometry_job)
 
         directory, file = os.path.split(path_to_stars_file)
         dp = create_dataproduct(path_to_stars_file,file, "annotated_stars")
@@ -184,7 +184,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         fits_file = list[1]
         path_to_fits_file = os.path.join(local_data_dir, os.path.join(taskid, fits_file))
 
-        box = fits.get_box(path_to_fits_file)
+        box = fits_imaging.get_box(path_to_fits_file)
         astrobaseIO.astrobase_interface.do_PUT(key='observations2:box', id=None, taskid=taskid, value=box)
 
     if command == "draw_extra":
@@ -202,7 +202,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         path_to_output_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, output_image_file))
 
         # draw on image file
-        fits.draw_extra(path_to_fits_file=path_to_fits_file,
+        fits_imaging.draw_extra(path_to_fits_file=path_to_fits_file,
                         path_to_input_image_file=path_to_input_image_file,
                         path_to_output_image_file=path_to_output_image_file,
                         extra=extra)
@@ -223,7 +223,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         path_to_output_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, output_image_file))
 
         # draw on image file
-        path_to_new_file = fits.draw_extra(path_to_fits_file=path_to_fits_file,
+        path_to_new_file = fits_imaging.draw_extra(path_to_fits_file=path_to_fits_file,
                         path_to_input_image_file=path_to_input_image_file,
                         path_to_output_image_file=path_to_output_image_file,
                         extra=extra)
@@ -249,7 +249,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
         path_to_output_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, output_image_file))
 
         # draw on image file
-        path_to_new_file = fits.draw_extra(path_to_fits_file=path_to_fits_file,
+        path_to_new_file = fits_imaging.draw_extra(path_to_fits_file=path_to_fits_file,
                         path_to_input_image_file=path_to_input_image_file,
                         path_to_output_image_file=path_to_output_image_file,
                         extra=extra)
@@ -277,7 +277,7 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
 
         # draw on image file
         try:
-            path_to_new_file = fits.image_cutout(
+            path_to_new_file = fits_imaging.image_cutout(
                 path_to_fits_file=path_to_fits_file,
                 path_to_input_image_file=path_to_input_image_file,
                 path_to_output_image_file=path_to_output_image_file,
@@ -295,6 +295,3 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
 
             raise error
 
-def handle_registration():
-    print('services.handle_registration()')
-    print('LANDING_PAD =  '+LANDING_PAD)
