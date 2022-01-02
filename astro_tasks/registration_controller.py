@@ -1,7 +1,8 @@
 import os
 from astrobase_io import AstroBaseIO
 from . import tasks
-from .registration_services import submit
+from .registration_services import ingest
+from .service_ingest import do_ingest
 
 try:
     # production mode
@@ -18,9 +19,12 @@ except:
     LOCAL_DATA_DIR = 'd:\my_astrobase\data'
     LANDING_PAD = 'd:\my_astrobase\landing_pad'
 
+astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 
 def handle_registration():
     print('registration_controller.handle_registration()')
 
-    # execute submit service
-    submit(LANDING_PAD)
+    # execute ingest service
+    do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
+    print('done handle_registration')
+

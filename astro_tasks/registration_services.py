@@ -1,7 +1,7 @@
 import os
 
-def submit(landing_pad):
-    print('registration_services.submit()')
+def ingest(landing_pad):
+    print('registration_services.ingest()')
     print('landing_pad =  '+landing_pad)
 
     for dirpath, dirnames, filenames in os.walk(landing_pad, followlinks=True):

@@ -214,6 +214,35 @@ class AstroBase:
                 "ERROR: " + str(response.status_code) + ", " + str(response.reason) + ', ' + str(response.content)))
 
 
+    def do_GET_NextTaskID(self, timestamp, taskid_postfix=""):
+        """
+        :param timestamp: timestamp on which the taskid is based
+        :param taskid_postfix: optional addition to the taskid,
+               like when taskid_postfix="_IMG" the taskid will become "190405001_IMG"
+        :return: taskid
+        """
+
+        self.do_print("do_GET_NextTaskID(" + str(timestamp) + ")")
+
+        # construct the url
+        url = self.host + "get_next_taskid?timestamp=" + str(timestamp)+"&taskid_postfix="+taskid_postfix
+
+        # do the request to the astrobase backend
+        response = requests.request("GET", url, headers=self.header)
+        self.do_print("[GET " + response.url + "]")
+        self.do_print("Response: " + str(response.status_code) + ", " + str(response.reason))
+
+        # parse the response
+        try:
+            json_response = json.loads(response.text)
+            taskID = json_response["taskID"]
+            return taskID
+        except Exception as err:
+            self.do_print("Exception : " + str(err))
+            raise (Exception(
+                "ERROR: " + str(response.status_code) + ", " + str(response.reason) + ', ' + str(response.content)))
+
+
     def do_PUT(self, key='observations', id=None, value=None, taskid=None):
         """
         PUT a value to an existing field of a resource (table).

@@ -224,6 +224,7 @@ class AstroBaseIO:
             self.do_print(message)
 
         if 'slack' in method:
+            self.do_print(message)
             self.send_message_to_apidorn_slack_channel(message)
 
     def send_message_to_apidorn_slack_channel(self, message_str):
