@@ -1,9 +1,8 @@
 import os
 from celery import Celery
 import astro_tasks, dev_tasks
-#from astro_tasks import tasks
-#from dev_tasks import tasks
 
+VERSION = "2 jan 2022 - 10:30"
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
@@ -33,6 +32,7 @@ app.conf.update(
 app.conf.task_routes = {
     'astro_tasks.tasks.*': {'queue': 'astro'},
     'astro_tasks.tasks.handle_cutout': {'queue': 'cutout'},
+    'astro_tasks.tasks.ingest': {'queue': 'registration'},
     'dev_tasks.tasks.*': {'queue': 'dev_q'},
 }
 

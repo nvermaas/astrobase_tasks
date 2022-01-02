@@ -1,7 +1,7 @@
 import os
 from os import listdir
 from celery import current_task
-from my_celery import app
+from my_celery import app, VERSION
 from astro_tasks import services
 
 try:
@@ -18,6 +18,11 @@ def ping(name):
 @app.task
 def dir(my_path):
     return listdir(my_path)
+
+@app.task
+def version():
+    # get current version
+    return "astrobase_tasks version " + VERSION + " from host " + str(current_task.request.hostname)
 
 
 @app.task
@@ -49,8 +54,6 @@ def get_jobs_test():
     return services.get_jobs_from_astrobase('celery')
 
 
-
-
 # client program to test access to celery/broker
 if __name__ == '__main__':
 
@@ -65,12 +68,15 @@ if __name__ == '__main__':
     #task = app.send_task("astro_tasks.tasks.get_jobs")
     #print(task.get())
 
+    # send remote task
     task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
     print(task.get())  # pong my remote app
 
+    # send remote task
+    task = app.send_task("astro_tasks.tasks.version")
+    print(task.get())  # pong my remote app
+
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
-    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="347"))
-    #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="348"))
     # print(task.get())
 
     print('run has finished')
