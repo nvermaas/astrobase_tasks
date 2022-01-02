@@ -2,7 +2,7 @@ import os
 from celery import Celery
 import astro_tasks, dev_tasks
 
-VERSION = "2 jan 2022 - 14:00"
+VERSION = "2 jan 2022 - 15:00"
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
