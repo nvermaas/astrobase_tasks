@@ -1,7 +1,6 @@
 import os
 from astrobase_io import AstroBaseIO
 from . import tasks
-from .registration_services import ingest
 from .service_ingest import do_ingest
 
 try:

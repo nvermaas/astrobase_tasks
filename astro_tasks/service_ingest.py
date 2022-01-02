@@ -7,6 +7,11 @@
 """
 
 import os
+try:
+    import pwd
+except ImportError:
+    pass
+
 import platform
 import shutil
 import json
@@ -68,6 +73,13 @@ def do_ingest(astrobaseIO, local_landing_pad, local_data_dir):
         task_directory = os.path.join(local_data_dir, taskid)
         if not os.path.exists(task_directory):
             os.makedirs(task_directory)
+            try:
+                # default celery/docker creates files as 'root'. Chmod them to 'nvermaas'.
+                uid, gid = pwd.getpwnam('nvermaas').pw_uid, pwd.getpwnam('nvermaas').pw_gid
+                os.chown(task_directory, uid, gid)  # set user:group as nvermaas:nvermaas
+            except:
+                # this only (needs to) work(s) on linux, otherwise just skip and continue
+                pass
 
         # create a raw directory (probably already exists)
         # /astrobase/data/raw
