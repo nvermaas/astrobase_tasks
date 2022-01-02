@@ -9,12 +9,14 @@ try:
     ASTROBASE_USER = os.environ['ASTROBASE_USER']
     ASTROBASE_PASSWORD = os.environ['ASTROBASE_PASSWORD']
     LOCAL_DATA_DIR = os.environ['LOCAL_DATA_DIR']
+    LANDING_PAD = os.environ['LANDING_PAD']
 except:
     # development mode
     ASTROBASE_URL = "http://localhost:8000/my_astrobase/"
     ASTROBASE_USER = "dev_client"
     ASTROBASE_PASSWORD = "my_dev_client_2021"
     LOCAL_DATA_DIR = 'd:\my_astrobase\data'
+    LANDING_PAD = 'd:\my_astrobase\landing_pad'
 
 astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 
@@ -293,3 +295,6 @@ def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
 
             raise error
 
+def handle_registration():
+    print('services.handle_registration()')
+    print('LANDING_PAD =  '+LANDING_PAD)

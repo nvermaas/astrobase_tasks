@@ -53,6 +53,15 @@ def get_jobs():
 def get_jobs_test():
     return services.get_jobs_from_astrobase('celery')
 
+@app.task
+def registration():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_registration()
+
+def registration_test():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return services.handle_registration()
+
 
 # client program to test access to celery/broker
 if __name__ == '__main__':
@@ -78,5 +87,12 @@ if __name__ == '__main__':
 
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
     # print(task.get())
+
+    # send remote task
+    result = registration_test()
+
+
+    task = app.send_task("astro_tasks.tasks.registration")
+    print(task.get())  # pong my remote app
 
     print('run has finished')
