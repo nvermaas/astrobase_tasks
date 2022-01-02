@@ -78,7 +78,7 @@ if __name__ == '__main__':
     #print(task.get())
 
     # send remote task
-    task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="my remote app"))
+    task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="nico"))
     print(task.get())  # pong my remote app
 
     # send remote task
@@ -88,11 +88,10 @@ if __name__ == '__main__':
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
     # print(task.get())
 
-    # send remote task
+    # run local task
     result = registration_test()
-
-
+    # send remote task
     task = app.send_task("astro_tasks.tasks.registration")
-    print(task.get())  # pong my remote app
+    print(task.get())
 
     print('run has finished')
