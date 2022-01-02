@@ -19,11 +19,11 @@ except:
 astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 
 # add with   : http://localhost:8000/my_astrobase/run-command/?command=ping
-# check with : http://localhost:8000/my_astrobase/jobs/?queue=astro
-def get_jobs_from_astrobase(jobs_queue):
+# check with : http://localhost:8000/my_astrobase/jobs/?job_service=celery
+def get_jobs_from_astrobase(job_service):
 
     try:
-        query = "status=new&queue=" + jobs_queue
+        query = "status=new&job_service=" + job_service
         # todo: don't just return id's, but also the other parameters in a single request
         ids = astrobaseIO.astrobase_interface.do_GET_LIST(key='jobs:id', query=query)
         astrobaseIO.report("*jobs* : handling " + str(ids), "print")
