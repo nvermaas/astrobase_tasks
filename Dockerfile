@@ -1,4 +1,4 @@
-FROM python:3.7.2-alpine
+FROM python:3.10-alpine
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
 RUN pip install --upgrade pip
 
