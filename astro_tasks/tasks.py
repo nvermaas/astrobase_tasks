@@ -63,6 +63,23 @@ def registration_test():
     # get this function as empty as possible (because debugger doesn't work here).
     return registration_controller.handle_registration()
 
+@app.task
+def run_ingest():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_ingest()
+
+def run_ingest_test():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_ingest()
+
+@app.task
+def run_cleanup():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_cleanup()
+
+def run_cleanup_test():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_cleanup()
 
 # client program to test access to celery/broker
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ import os
 from astrobase_io import AstroBaseIO
 from . import tasks
 from .service_ingest import do_ingest
+from .service_cleanup import do_cleanup
 
 try:
     # production mode
@@ -23,7 +24,25 @@ astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 def handle_registration():
     print('registration_controller.handle_registration()')
 
+    # execute all the services
+    tasks.run_ingest.delay()
+    tasks.run_cleanup.delay()
+
     # execute ingest service
-    do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
+    # do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
     print('done handle_registration')
 
+
+def run_ingest():
+    print('registration_controller.ingest()')
+
+    # execute ingest service
+    do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
+    print('done ingest')
+
+def run_cleanup():
+    print('registration_controller.run_cleanup()')
+
+    # execute ingest service
+    do_cleanup(astrobaseIO, LOCAL_DATA_DIR)
+    print('done cleanup')
