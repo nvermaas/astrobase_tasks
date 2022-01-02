@@ -1,5 +1,6 @@
-FROM python:3.7.2
+FROM python:3.7.2-alpine
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
+RUN pip install --upgrade pip
 
 RUN adduser -D worker
 USER worker
