@@ -73,6 +73,26 @@ def run_ingest_test():
     return registration_controller.run_ingest()
 
 @app.task
+def run_submit():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_submit()
+
+def run_submit_test():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_submit()
+
+
+@app.task
+def run_processor():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_processor()
+
+def run_processor_test():
+    # get this function as empty as possible (because debugger doesn't work here).
+    return registration_controller.run_processor()
+
+
+@app.task
 def run_cleanup():
     # get this function as empty as possible (because debugger doesn't work here).
     return registration_controller.run_cleanup()
@@ -107,7 +127,7 @@ if __name__ == '__main__':
     # print(task.get())
 
     # run local task
-    result = registration_test()
+    # result = registration_test()
     # send remote task
     task = app.send_task("astro_tasks.tasks.registration")
     print(task.get())

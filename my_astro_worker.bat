@@ -1,1 +1,1 @@
-celery -A astro_tasks.tasks worker --pool=solo -l info -Q astro,cutout
+celery -A astro_tasks.tasks worker --pool=solo -l info -Q astro,cutout,registration
