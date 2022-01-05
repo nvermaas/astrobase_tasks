@@ -57,7 +57,7 @@ def get_jobs_test():
 @app.task
 def run_registration_pipeline():
     # get this function as empty as possible (because debugger doesn't work here).
-    return registration_controller.handle_registration()
+    return registration_controller.run_registration_pipeline()
 
 def run_registration_pipeline():
     # get this function as empty as possible (because debugger doesn't work here).
