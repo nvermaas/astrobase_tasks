@@ -107,6 +107,11 @@ if __name__ == '__main__':
     # use this to test/debug functionality in jobs_controller,
     # because the debugger doesn't work with @app.tasks
 
+    # send remote task, check if the version is as expected
+    task = app.send_task("astro_tasks.tasks.version")
+    print(task.get())  # pong my remote app
+
+
     # execute my_astro_worker.bat to start a local worker, then run/debug this file
     # this works, all jobs are delivered at once... (then handled 1 by 1)
     #ids = get_jobs_test()
@@ -119,16 +124,12 @@ if __name__ == '__main__':
     task = app.send_task("astro_tasks.tasks.ping", kwargs=dict(name="nico"))
     print(task.get())  # pong my remote app
 
-    # send remote task
-    task = app.send_task("astro_tasks.tasks.version")
-    print(task.get())  # pong my remote app
-
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
     # print(task.get())
 
     # run local task
     # result = registration_test()
-    # send remote task
+    # send remote task - this is the 'ping' for the registration pipeline
     task = app.send_task("astro_tasks.tasks.registration")
     print(task.get())
 

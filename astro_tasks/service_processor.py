@@ -13,14 +13,11 @@
 
 import os
 import platform
-from datetime import datetime
-import requests,json
 import urllib.request
 
-from astrobase_services.astrometry_client import Client
-from astrobase_services.service_specification import add_dataproducts
-from astrobase_services.service_submit import get_submission, get_job_id
-from astrobase_services.commands import fits
+from .service_specification import add_dataproducts
+from .service_submit import get_submission, get_job_id
+from . import fits_imaging
 
 def get_fits_header(filename):
 
@@ -155,7 +152,7 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
             # hooking in the new fits functionality
             fits_filename = os.path.join(task_directory, job_id + ".fits")
             if os.path.exists(fits_filename):
-                box = fits.get_box(fits_filename)
+                box = fits_imaging.get_box(fits_filename)
                 astrobaseIO.astrobase_interface.do_PUT(key='observations2:box', id=None, taskid=taskid, value=box)
 
         return True

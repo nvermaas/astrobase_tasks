@@ -11,7 +11,7 @@ from datetime import datetime
 import requests,json
 import urllib.request
 
-from astrobase_services.astrometry_client import Client
+from .astrometry_client import Client
 
 def get_creation_date(path_to_file):
     """
