@@ -127,8 +127,9 @@ if __name__ == '__main__':
     #task = app.send_task("astro_tasks.tasks.handle_job", kwargs=dict(id="624"))
     # print(task.get())
 
-    # run local task
-    # result = registration_test()
+    # run local task - this is the 'ping' for the registration pipeline
+    result = registration_test()
+
     # send remote task - this is the 'ping' for the registration pipeline
     task = app.send_task("astro_tasks.tasks.registration")
     print(task.get())

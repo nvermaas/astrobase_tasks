@@ -185,7 +185,7 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
 
 # --- Main Service -----------------------------------------------------------------------------------------------
 
-def do_processor(astrobaseIO, local_data_url, local_data_dir, astrometry_url, astrometry_api_key):
+def do_processor(astrobaseIO, local_data_dir, astrometry_url, astrometry_api_key):
     # astrobaseIO.report("- do_processor()", "print")
 
     # handle the results
