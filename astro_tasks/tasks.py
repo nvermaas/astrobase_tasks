@@ -55,13 +55,13 @@ def get_jobs_test():
 
 
 @app.task
-def registration():
+def run_registration_pipeline():
     # get this function as empty as possible (because debugger doesn't work here).
     return registration_controller.handle_registration()
 
-def registration_test():
+def run_registration_pipeline():
     # get this function as empty as possible (because debugger doesn't work here).
-    return registration_controller.handle_registration()
+    return registration_controller.run_registration_pipeline()
 
 @app.task
 def run_ingest():
@@ -128,10 +128,10 @@ if __name__ == '__main__':
     # print(task.get())
 
     # run local task - this is the 'ping' for the registration pipeline
-    result = registration_test()
+    # result = run_registration_pipeline_test()
 
     # send remote task - this is the 'ping' for the registration pipeline
-    task = app.send_task("astro_tasks.tasks.registration")
+    task = app.send_task("astro_tasks.tasks.run_registration_pipeline")
     print(task.get())
 
     print('run has finished')

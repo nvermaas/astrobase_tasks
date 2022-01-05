@@ -30,8 +30,8 @@ astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 
 # this is a 'ping' to the registration pipeline
 # this will run all the registration services once.
-def handle_registration():
-    print('registration_controller.handle_registration()')
+def run_registration_pipeline():
+    print('registration_controller.run_registration_pipeline()')
 
     # execute all the services (async)
     tasks.run_ingest.delay()
@@ -41,7 +41,7 @@ def handle_registration():
 
     # execute ingest service
     # do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
-    print('done handle_registration')
+    print('done run_registration_pipeline')
 
 
 def run_ingest():
