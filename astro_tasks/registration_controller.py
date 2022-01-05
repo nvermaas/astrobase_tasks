@@ -28,11 +28,15 @@ except:
 
 astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 
+# this is a 'ping' to the registration pipeline
+# this will run all the registration services once.
 def handle_registration():
     print('registration_controller.handle_registration()')
 
-    # execute all the services
+    # execute all the services (async)
     tasks.run_ingest.delay()
+    tasks.run_submit.delay()
+    tasks.run_processor.delay()
     tasks.run_cleanup.delay()
 
     # execute ingest service
