@@ -107,6 +107,8 @@ if __name__ == '__main__':
     # use this to test/debug functionality in jobs_controller,
     # because the debugger doesn't work with @app.tasks
 
+    handle_job_test("69")
+
     # send remote task, check if the version is as expected
     task = app.send_task("astro_tasks.tasks.version")
     print(task.get())  # pong my remote app
@@ -116,7 +118,7 @@ if __name__ == '__main__':
     # this works, all jobs are delivered at once... (then handled 1 by 1)
     #ids = get_jobs_test()
 
-    #handle_job_test("335")
+
     #task = app.send_task("astro_tasks.tasks.get_jobs")
     #print(task.get())
 

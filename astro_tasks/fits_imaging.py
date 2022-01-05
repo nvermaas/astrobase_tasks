@@ -500,8 +500,8 @@ def image_cutout(path_to_fits_file, path_to_input_image_file, path_to_output_ima
         raise (Exception("ERROR: " + path_to_input_image_file + ' not found'))
 
     im_new = im.copy()
-    draw = ImageDraw.Draw(im_new, 'RGBA')
-
+    #draw = ImageDraw.Draw(im_new, 'RGBA')
+    draw = ImageDraw.Draw(im_new)
     # do the magic
 
     # the cone information is in the 'extra' parameters
