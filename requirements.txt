@@ -1,5 +1,5 @@
 #celery==4.2.1
-celery==5.1.2
+celery==5.2.2
 eventlet==0.33.0
 requests==2.20.0
 astropy==4.0
