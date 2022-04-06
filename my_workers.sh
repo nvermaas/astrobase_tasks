@@ -1,5 +1,5 @@
 export RABBITMQ_BROKER=amqp://nvermaas:RaBbIt_2019@192.168.178.37:5672
-export ASTROBASE_URL=https://uilennest.net/my_astrobase
+export ASTROBASE_URL=https://web-of-wyrd.nl/my_astrobase
 export ASTROBASE_USER=nvermaas
 export ASTROBASE_PASSWORD=StErReN_2020
 export QUEUE_ASTRO=astro
