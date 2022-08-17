@@ -457,7 +457,7 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
             print(str(symbol))
             ra = symbol['ra']
             dec = symbol['dec']
-            size = symbol['size']
+            size = abs(symbol['size'])
 
             sky = SkyCoord(Longitude([ra], unit=u.deg), Latitude([dec], unit=u.deg))
             x, y = wcs.world_to_pixel(sky)
@@ -465,6 +465,10 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
             if symbol['shape'] == 'cross':
                 draw_sky_cross(wcs, draw, ra, dec, size, width=1, fill=symbol['color'], frame='icrs')
                 draw.text((x, y+size), symbol['label'], symbol['color'], font=font_ticks)
+
+            if symbol['shape'] == 'circle_outline':
+                draw_sky_circle(wcs, draw, ra, dec, size=int(size), width=2, outline=symbol['color'], fill=None)
+                draw.text((x-size,y-(size*2)-50), symbol['label'], symbol['color'], font=font_title)
 
             if symbol['shape'] == 'circle':
                 draw_sky_circle(wcs, draw, ra, dec, size=int(size), width=2, outline=symbol['color'], fill=None)
