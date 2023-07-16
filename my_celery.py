@@ -2,12 +2,12 @@ import os
 from celery import Celery
 import astro_tasks, dev_tasks
 
-VERSION = "5 jan 2022 - 12:00"
+VERSION = "16 jul 2023"
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
 except:
-    RABBITMQ_BROKER = "amqp://nvermaas:RaBbIt_2019@192.168.178.37:5672"
+    print("ERROR: define the RABBITMQ_BROKER environment variable" )
 
 try:
     POLLING_IN_SECONDS = float(os.environ['POLLING_IN_SECONDS'])
