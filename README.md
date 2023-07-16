@@ -48,7 +48,41 @@ There are 3 types of tasks that can be run simultaneously on 3 different Celery 
 ## The Functionality
 
 ### registration_controller.py
-The registration pipeline handles the plate solving at astrometry.net
+The registration pipeline handles the ingest of new images into the observation database and the
+plate solving at astrometry.net. It runs 4 microservices:
+
+* ingest service: 
+  * checks a 'landing_pad' directory on disk for the arrival of new images (jpg, png).
+  * if a new image appears, it creates a 'specification' and pushes it to the ``astrobase`` REST API, where it will be stored in the database.
+  * it moves the raw image to a storage disk (in my case a NAS in my local network) 
+  * it removes the original file(s) from the landing_pad
+  * the 'status' of the observation in the database is set to '**raw**'
+
+![](docs/astrobase_raw.jpg)
+(_this ingests a new observation in the astrobase database, which has its own GUI to start the 
+plate solving process by clicking 'Process', after which the status goes to **pending**_)
+  
+* submit service:
+  * checks the astrobase database (REST API) for observations with status '**pending**' 
+  * when found, it sets the status to '**submitting**'
+  * it submits the url of the original image to nova.astrometry.net
+  * if that was succesful, it adds the astrometry.net job url to the observation metadata and sets the status over the observation to '**submitted**'
+  
+  * checks the astrobase database for observation with status **submitted**
+  * when found, it checks the astrometry.net job status for 'succes'
+  * when 'succes', it sets the status to '**processed**'
+  
+* process service:
+  * checks the astrobase database (REST API) for observations with status '**processed**' 
+  * if found, it downloads the results from astrometry.net
+    * separate files are stored on the file system (NAS)
+    * url's to those files are stored in the database
+  * it sets the status to '**done**'
+  
+* cleanup service
+  * checks the astrobase database (REST API) for observations with status '**removing**' (which can be set from the GUI)
+  * it removes all the files for this observation from the file system (NAS)
+  * it removes the observation from the database
 
 ### jobs_controller.py
 Handles incoming jobs from ``astrobase``.

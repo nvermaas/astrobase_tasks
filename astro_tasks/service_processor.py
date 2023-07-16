@@ -5,11 +5,7 @@
     Description: - checks for new images in a given directory (_locallanding_pad)
                  - new images are then added as observation and dataproduct to the astrobase backend
 """
-# ASTROMETRY_URL = "http://nova.astrometry.net"
-# ASTROMETRY_API_KEY = "otrkmikbckoopfje"
 
-#ASTROMETRY_URL = "http://raspiastro:8000"
-#ASTROMETRY_API_KEY = ""
 
 import os
 import platform
