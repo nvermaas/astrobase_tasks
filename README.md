@@ -34,10 +34,10 @@ There are 3 types of tasks that can be run simultaneously on 3 different Celery 
 ``astrobase_tasks`` runs in Docker together with some other services.
 (The ``docker-compose.yml`` file is not provided in this repo)
 
-* astrobase backend (REST API to the sqlite database)
-  * observations (not needed for ``astrobase_tasks package``) 
-  * jobs, contains all information to fire off task in ``astrobase_tasks``
-  * exoplanets, updated data about all the confirmed exoplanets
+* astrobase backend (REST API to the sqlite database) contains:
+  * observations table (not needed for ``astrobase_tasks package``) 
+  * jobs table, contains all information to run the task in ``astrobase_tasks``
+  * exoplanets table, updated data about all the confirmed exoplanets
 
 * rabbitMQ (message broker used by Celery)
 * celery_beat (another instance of the ``astrobase_tasks`` image that provides the 'heartbeat' to check for new tasks)
