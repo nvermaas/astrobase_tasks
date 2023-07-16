@@ -19,12 +19,9 @@ try:
 except:
     # development mode
     ASTROBASE_URL = "http://localhost:8000/my_astrobase/"
-    ASTROBASE_USER = "dev_client"
-    ASTROBASE_PASSWORD = "my_dev_client_2021"
     LOCAL_DATA_DIR = 'd:\my_astrobase\data'
     LANDING_PAD = 'd:\my_astrobase\landing_pad'
     ASTROMETRY_URL = "http://nova.astrometry.net"
-    ASTROMETRY_API_KEY = "otrkmikbckoopfje"
 
 astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 

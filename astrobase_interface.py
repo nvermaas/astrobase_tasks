@@ -19,14 +19,10 @@ LAST_UPDATE = "3 dec 2021"
 ASTROBASE_HEADER = {
     'content-type': "application/json",
     'cache-control': "no-cache",
-    #'authorization': "Basic aedf3a3d011cd2e415ea333a523a688f30b88d26="
 }
 
 # some constants
 ASTROBASE_HOST_DEV = "http://localhost:8000/astrobase"       # your local development environment with Django webserver
-ASTROBASE_HOST_VM = "http://localhost:8000/astrobase"         # your local Ansible/Vagrant setup for testing
-ASTROBASE_HOST_PROD = "http://192.168.178.62:8018/astrobase"      # the astrobase production environment.
-
 DEFAULT_ASTROBASE_HOST = ASTROBASE_HOST_DEV
 TIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
