@@ -1,7 +1,5 @@
 # astrobase_tasks
 
-![](docs/astrobase-architecture.png)
-
 ### astrobase
 ``astrobase_tasks`` is not a standalone package, but an addition to the ``astrobase`` project.
  ``Astrobase`` is a Django web application that wraps my observation database in a REST API, 
@@ -16,6 +14,8 @@ This repo, ``astrobase_tasks``, is developed and deployed separately from ``astr
 and contains the underlying functionality for the 'jobs' mentioned above.
 It runs various (async) tasks using Celery with RabbitMQ.
 
+![](docs/astrobase-architecture.png)
+
 ## The Technology Stack
   * Python 3.10
   * Celery
@@ -23,7 +23,7 @@ It runs various (async) tasks using Celery with RabbitMQ.
 
 ### Celery with RabbitMQ
 There are 3 types of tasks that can be run simultaneously on 3 different Celery message queues
-* registration jobs: 'plate solve' an image to nova.astronomy.net'and download the results (starchart, fits files)
+* registration jobs: 'plate solve' an image to nova.astronomy.net'and download the results (starchart, annotated image, fits files)
 * imaging job: plot information on an image (grid, stars, transients, exoplanets)
 * image cutout of a list of images
 
@@ -50,12 +50,14 @@ There are 3 types of tasks that can be run simultaneously on 3 different Celery 
 ### registration_controller.py
 The registration pipeline handles the plate solving at astrometry.net
 
-
 ### jobs_controller.py
 Handles incoming jobs from ``astrobase``.
 
 It polls the astrobase `jobs` API at an interval through the ``AstrobaseIO`` interface package.
-The job contains all the information to start the task 
+The job contains all the information to complete the task.
+Including the coordinates, shapes and colors of the objects to be plotten on an image.
+(that information itself comes from the ``astrobase`` backend)
+
 
 ### fits_imaging.py
 This module uses ``astropy`` and ``pillow`` to combine the WCS coordinatesystem in the fits file with plotting functionality on images.
