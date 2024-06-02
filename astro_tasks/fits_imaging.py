@@ -24,7 +24,7 @@ def get_world_coordinate_system(path_to_fits_file):
     width = my_header['NAXIS1']
     height = my_header['NAXIS2']
     x_reference_pixel = my_header['CRPIX1']
-    y_reference_pixel = my_header['CRPIX1']
+    y_reference_pixel = my_header['CRPIX2']
 
     wcs = WCS(my_header, naxis=2)
     return wcs, width, height, ra_reference, dec_reference
