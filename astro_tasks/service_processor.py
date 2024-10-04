@@ -170,7 +170,7 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
             submission_id = astrobaseIO.astrobase_interface.do_GET(key='observations2:job',id=None, taskid=taskID)
             # job_id = get_job_id(submission_id)
             # results =  get_job_results(astrobaseIO, job_id, False)
-            astrobaseIO.report("*processor* : handle results of job " + submission_id, "slack")
+            astrobaseIO.report(f"*processor* : handle results of job {submission_id}", "slack")
 
             # download the created images as dataproducts
             ok = do_create_dataproducts(astrobaseIO, taskID, submission_id, local_data_dir)
