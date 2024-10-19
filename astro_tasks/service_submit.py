@@ -209,7 +209,7 @@ def do_check_submission_status(astrobaseIO, astrometry_url, astrometry_api_key):
             # get the astrometry submission_id to check
             submission_id = astrobaseIO.astrobase_interface.do_GET(key='observations2:job', id=None, taskid=taskID)
             job_status, radius = check_submission_status(astrobaseIO,submission_id, astrometry_url, astrometry_api_key)
-            astrobaseIO.report("*processor* : status of job " + submission_id + " = " + job_status, "print")
+            astrobaseIO.report(f"*processor* : status of job {submission_id} = {job_status}", "print")
 
             if job_status == 'success':
                 astrobaseIO.astrobase_interface.do_PUT(key='observations2:new_status', id=None,taskid=taskID,value="processed")
