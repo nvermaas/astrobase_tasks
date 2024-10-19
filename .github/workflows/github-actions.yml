@@ -18,4 +18,6 @@ jobs:
              cd $HOME/shared
              docker stop astrobase_tasks
              docker rm astrobase_tasks
+             docker stop celery_beat
+             docker rm celery_beat
              docker-compose -p astronest -f ~/shared/docker-compose-astro.yml up -d

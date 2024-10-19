@@ -78,7 +78,7 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
             else:
                 return ""
 
-        astrobaseIO.report("--- do_create_dataproducts("+taskid+","+submission_id+")", "print")
+        astrobaseIO.report(f"--- do_create_dataproducts({taskid},{submission_id})", "print")
         submission = get_submission(astrobase, submission_id, ASTROMETRY_URL, ASTROMETRY_API_KEY)
 
         try:
