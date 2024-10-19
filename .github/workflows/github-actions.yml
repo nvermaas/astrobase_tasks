@@ -16,4 +16,6 @@ jobs:
              git pull
              docker build -t astrobase_tasks:latest .
              cd $HOME/shared
+             docker stop astrobase_tasks
+             docker rm astrobase_tasks
              docker-compose -p dockernest up -d
