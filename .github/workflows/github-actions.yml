@@ -18,4 +18,4 @@ jobs:
              cd $HOME/shared
              docker stop astrobase_tasks
              docker rm astrobase_tasks
-             docker-compose -p dockernest up -d
+             docker-compose -p astronest -f ~/shared/docker-compose-astro.yml up -d
