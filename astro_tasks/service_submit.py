@@ -112,7 +112,7 @@ def get_submission(astrobaseIO, submission_id, astrometry_url, astrometry_api_ke
     :return:
     """
     # login to astrometry with the API_KEY
-    astrobaseIO.report("---- get_submission(" + submission_id + ")", "print")
+    astrobaseIO.report(f"---- get_submission({submission_id})", "print")
 
     client = Client(apiurl=astrometry_url+"/api/")
     client.login(apikey=astrometry_api_key)
