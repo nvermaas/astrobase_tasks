@@ -25,6 +25,8 @@ astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 def get_jobs_from_astrobase(job_service):
 
     try:
+        print(f'services.get_jobs_from_astrobase({job_service})')
+
         query = "status=new&job_service=" + job_service
         # todo: don't just return id's, but also the other parameters in a single request
         ids = astrobaseIO.astrobase_interface.do_GET_LIST(key='jobs:id', query=query)

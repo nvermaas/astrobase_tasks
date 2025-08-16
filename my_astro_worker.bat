@@ -1,1 +1,10 @@
+set RABBITMQ_BROKER=amqp://nvermaas:RaBbIt_2019@192.168.178.126:5672
+set ASTROBASE_URL=https://uilennest.net/my_astrobase
+set ASTROBASE_USER=nvermaas
+set ASTROBASE_PASSWORD=StErReN_2020
+set QUEUE_ASTRO=astro
+set POLLING_IN_SECONDS=120
+set ASTROMETRY_URL=http://nova.astrometry.net
+set ASTROMETRY_API_KEY=otrkmikbckoopfje
+set LOCAL_DATA_DIR=d:\\temp\\data
 celery -A astro_tasks.tasks worker --pool=solo -l info -Q astro,cutout,registration

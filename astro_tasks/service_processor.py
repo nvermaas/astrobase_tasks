@@ -70,8 +70,17 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
         def add_dataproduct(job_id, sub_url,file_end, dataproduct_type):
             url = ASTROMETRY_URL + sub_url + job_id
             destination = os.path.join(task_directory, job_id + file_end)
+
             if not os.path.exists(destination):
-                urllib.request.urlretrieve(url, destination)
+                headers = {'referer': 'https://nova.astrometry.net/api/login'}
+                r = requests.get(url, headers=headers, stream=True)
+                r.raise_for_status()
+
+                with open(destination, "wb") as f:
+                    for chunk in r.iter_content(8192):
+                        f.write(chunk)
+
+                #urllib.request.urlretrieve(url, destination)
                 size = os.path.getsize(destination)
                 dp = job_id + file_end + ":"+dataproduct_type+":ready:"+str(size)
                 return "," + dp
