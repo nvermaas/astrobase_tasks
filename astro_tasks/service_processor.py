@@ -10,6 +10,7 @@
 import os
 import platform
 import urllib.request
+import requests
 
 from .service_specification import add_dataproducts
 from .service_submit import get_submission, get_job_id
