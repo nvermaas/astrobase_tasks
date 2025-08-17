@@ -62,6 +62,7 @@ def get_creation_date(path_to_file):
             return stat.st_mtime
 
 def download_url_to_destination(url, destination):
+    HEADERS = {'referer': 'https://nova.astrometry.net/api/login'}
     # = {"session": SESSION}
     #r = requests.get(url, cookies=cookies, headers=headers, stream=True)
 
@@ -76,7 +77,6 @@ def download_url_to_destination(url, destination):
 def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrometry_api_key):
     ASTROMETRY_URL = astrometry_url
     ASTROMETRY_API_KEY = astrometry_api_key
-    HEADERS = {'referer':'https://nova.astrometry.net/api/login'}
 
 
     def do_create_dataproducts(astrobase, taskid, submission_id, local_data_dir):
