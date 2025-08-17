@@ -61,10 +61,23 @@ def get_creation_date(path_to_file):
             # so we'll settle for when its content was last modified.
             return stat.st_mtime
 
+def download_url_to_destination(url, destination):
+    # = {"session": SESSION}
+    #r = requests.get(url, cookies=cookies, headers=headers, stream=True)
+
+    r = requests.get(url, headers=HEADERS, stream=True)
+    r.raise_for_status()
+
+    with open(destination, "wb") as f:
+        for chunk in r.iter_content(8192):
+            f.write(chunk)
+
 #-------------------------------------------------------------------------------------
 def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrometry_api_key):
     ASTROMETRY_URL = astrometry_url
     ASTROMETRY_API_KEY = astrometry_api_key
+    HEADERS = {'referer':'https://nova.astrometry.net/api/login'}
+
 
     def do_create_dataproducts(astrobase, taskid, submission_id, local_data_dir):
 
@@ -73,15 +86,8 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
             destination = os.path.join(task_directory, job_id + file_end)
 
             if not os.path.exists(destination):
-                headers = {'referer': 'https://nova.astrometry.net/api/login'}
-                r = requests.get(url, headers=headers, stream=True)
-                r.raise_for_status()
+                download_url_to_destination(url,destination)
 
-                with open(destination, "wb") as f:
-                    for chunk in r.iter_content(8192):
-                        f.write(chunk)
-
-                #urllib.request.urlretrieve(url, destination)
                 size = os.path.getsize(destination)
                 dp = job_id + file_end + ":"+dataproduct_type+":ready:"+str(size)
                 return "," + dp
@@ -114,7 +120,7 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
         url = ASTROMETRY_URL + "/sky_plot/zoom0/" + skyplot_id
         destination = os.path.join(task_directory, job_id + "_sky_globe.jpg")
         if not os.path.exists(destination):
-            urllib.request.urlretrieve(url, destination)
+            download_url_to_destination(url,destination)
             size = os.path.getsize(destination)
             dp = job_id + "_sky_globe.jpg" + ":sky_globe:ready:"+str(size)
             dataproducts = dataproducts + "," + dp
@@ -123,7 +129,7 @@ def do_handle_processed_jobs(astrobaseIO, local_data_dir, astrometry_url, astrom
         url = ASTROMETRY_URL + "/sky_plot/zoom1/" + skyplot_id
         destination = os.path.join(task_directory, job_id + "_sky_plot.jpg")
         if not os.path.exists(destination):
-            urllib.request.urlretrieve(url, destination)
+            download_url_to_destination(url,destination)
             size = os.path.getsize(destination)
             dp = job_id + "_sky_plot.jpg" + ":sky_plot:ready:"+str(size)
             dataproducts = dataproducts + "," + dp
