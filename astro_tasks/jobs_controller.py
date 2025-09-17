@@ -109,72 +109,86 @@ def add_dataproduct(astrobaseIO, taskid, dataproducts_string):
         astrobaseIO.astrobase_interface.do_POST_dataproducts(taskid, dps)
 
 
+def do_grid(astrobaseIO, params, extra, local_data_dir):
+    """
+    draw a grid on the image
+    """
+    list = params.split(',')
+    observation_dir = list[0]
+    fits_file = list[1]
+    input_image_file = list[2]
+    output_image_file = list[3]
+
+    try:
+        title = list[4].replace('#', ',')
+    except:
+        title = "Observation"
+
+    try:
+        grid_type = list[5]
+    except:
+        grid_type = "degrees"
+
+    # construct path's based on 'observation_dir:fits_file:image_file'
+    # 201023011,4660627.fits,4660627_annotated.jpg
+
+    path_to_fits_file = os.path.join(local_data_dir, os.path.join(observation_dir, fits_file))
+    path_to_input_image_file = os.path.join(local_data_dir, os.path.join(observation_dir, input_image_file))
+    path_to_output_image_file = os.path.join(local_data_dir, os.path.join(observation_dir, output_image_file))
+
+    path_to_grid_file, ra_min, ra_max, dec_min, dec_max, fov = \
+        fits_imaging.draw_grid(path_to_fits_file=path_to_fits_file,
+                               path_to_input_image_file=path_to_input_image_file,
+                               path_to_output_image_file=path_to_output_image_file,
+                               title=title, grid_type=grid_type)
+
+    directory, file = os.path.split(path_to_grid_file)
+    if grid_type == 'equatorial':
+        dp = create_dataproduct(path_to_grid_file, file, "annotated_grid_eq")
+    else:
+        dp = create_dataproduct(path_to_grid_file, file, "annotated_grid")
+
+    add_dataproduct(astrobaseIO, observation_dir, dp)
+    astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_min', id=None, taskid=observation_dir,
+                                           value=str(ra_min))
+    astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_max', id=None, taskid=observation_dir,
+                                           value=str(ra_max))
+    astrobaseIO.astrobase_interface.do_PUT(key='observations2:dec_min', id=None, taskid=observation_dir,
+                                           value=str(dec_min))
+    astrobaseIO.astrobase_interface.do_PUT(key='observations2:dec_max', id=None, taskid=observation_dir,
+                                           value=str(dec_max))
+    astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_dec_fov', id=None, taskid=observation_dir, value=fov)
+
+
+def do_stars(astrobaseIO, params, extra, local_data_dir):
+    list = params.split(',')
+    observation_dir = list[0]
+    astrometry_job = list[1]
+
+    # construct path's based on 'observation_dir:fits_file:image_file'
+    # 201023011,4660627.fits,4660627_annotated.jpg
+
+    path_to_fits = os.path.join(local_data_dir, observation_dir)
+    path_to_stars_file, max_magnitude = fits_imaging.get_stars(path_to_fits=path_to_fits, astrometry_job=astrometry_job)
+
+    directory, file = os.path.split(path_to_stars_file)
+    dp = create_dataproduct(path_to_stars_file, file, "annotated_stars")
+
+    add_dataproduct(astrobaseIO, observation_dir, dp)
+    magnitude = astrobaseIO.astrobase_interface.do_GET(key='observations2:magnitude', id=None, taskid=observation_dir)
+    if not magnitude:
+        astrobaseIO.astrobase_interface.do_PUT(key='observations2:magnitude', id=None, taskid=observation_dir,
+                                               value=max_magnitude)
+
+
 def do_execute_command(astrobaseIO, command, params, extra, local_data_dir):
     print("do_execute_command(" + command + ")")
 
     if command == "grid":
-        list = params.split(',')
-        observation_dir = list[0]
-        fits_file = list[1]
-        input_image_file = list[2]
-        output_image_file = list[3]
-
-        try:
-            title = list[4].replace('#',',')
-        except:
-            title = "Observation"
-
-        try:
-            grid_type = list[5]
-        except:
-            grid_type = "degrees"
-
-        # construct path's based on 'observation_dir:fits_file:image_file'
-        # 201023011,4660627.fits,4660627_annotated.jpg
-
-        path_to_fits_file = os.path.join(local_data_dir,os.path.join(observation_dir, fits_file))
-        path_to_input_image_file = os.path.join(local_data_dir,os.path.join(observation_dir, input_image_file))
-        path_to_output_image_file = os.path.join(local_data_dir, os.path.join(observation_dir, output_image_file))
-
-        path_to_grid_file, ra_min, ra_max, dec_min, dec_max, fov = \
-            fits_imaging.draw_grid(path_to_fits_file=path_to_fits_file,
-                           path_to_input_image_file=path_to_input_image_file,
-                           path_to_output_image_file=path_to_output_image_file,
-                           title=title, grid_type=grid_type)
-
-        directory, file = os.path.split(path_to_grid_file)
-        if grid_type == 'equatorial':
-            dp = create_dataproduct(path_to_grid_file,file, "annotated_grid_eq")
-        else:
-            dp = create_dataproduct(path_to_grid_file,file, "annotated_grid")
-
-        add_dataproduct(astrobaseIO, observation_dir, dp)
-        astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_min', id=None, taskid=observation_dir, value=str(ra_min))
-        astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_max', id=None, taskid=observation_dir, value=str(ra_max))
-        astrobaseIO.astrobase_interface.do_PUT(key='observations2:dec_min', id=None, taskid=observation_dir, value=str(dec_min))
-        astrobaseIO.astrobase_interface.do_PUT(key='observations2:dec_max', id=None, taskid=observation_dir, value=str(dec_max))
-        astrobaseIO.astrobase_interface.do_PUT(key='observations2:ra_dec_fov', id=None, taskid=observation_dir, value=fov)
-
+        do_grid(astrobaseIO,params,extra,local_data_dir)
 
     if command == "stars":
-        list = params.split(',')
-        observation_dir = list[0]
-        astrometry_job = list[1]
-
-        # construct path's based on 'observation_dir:fits_file:image_file'
-        # 201023011,4660627.fits,4660627_annotated.jpg
-
-        path_to_fits = os.path.join(local_data_dir,observation_dir)
-        path_to_stars_file, max_magnitude = fits_imaging.get_stars(path_to_fits=path_to_fits, astrometry_job=astrometry_job)
-
-        directory, file = os.path.split(path_to_stars_file)
-        dp = create_dataproduct(path_to_stars_file,file, "annotated_stars")
-
-        add_dataproduct(astrobaseIO, observation_dir, dp)
-        magnitude = astrobaseIO.astrobase_interface.do_GET(key='observations2:magnitude', id=None, taskid=observation_dir)
-        if not magnitude:
-            astrobaseIO.astrobase_interface.do_PUT(key='observations2:magnitude', id=None, taskid=observation_dir, value=max_magnitude)
-
+        do_stars(astrobaseIO,params,extra,local_data_dir)
 
     # read min/max ra and dec from fits and store in database
     if command == "box":
