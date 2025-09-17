@@ -478,6 +478,10 @@ def draw_extra(path_to_fits_file, path_to_input_image_file, path_to_output_image
                 draw_sky_circle(wcs, draw, ra, dec, size=int(size), width=2, outline=symbol['color'], fill=None)
                 draw.text((x-size,y-(size*2)-5), symbol['label'], symbol['color'], font=font_ticks)
 
+            if symbol['shape'] == 'asteroid':
+                draw_sky_circle(wcs, draw, ra, dec, size=int(size), width=2, outline=symbol['color'], fill=None)
+                draw.text((x-size,y-(size*2)-15), symbol['label'], symbol['color'], font=font_ticks)
+
         # save result
         path_to_new_file = path_to_output_image_file
         im_new.save(path_to_new_file)

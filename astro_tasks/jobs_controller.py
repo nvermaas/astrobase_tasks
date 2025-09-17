@@ -303,6 +303,11 @@ def image_cutout(astrobaseIO, params, extra, local_data_dir):
 
 
 def do_asteroids(astrobaseIO, params, extra, local_data_dir):
+    """
+    for now, exactly the same as 'do_transient'
+    The asteroids are drawn on the 'annotated_transient' image.
+    Only the incoming 'extra' content is different, but that is handled by astrobase.
+    """
     print('*** do_asteroids ***')
     list = params.split(',')
     observation_dir = list[0]
