@@ -266,7 +266,7 @@ def do_exoplanets(astrobaseIO, params, extra, local_data_dir):
 
     add_dataproduct(astrobaseIO, observation_dir, dp)
 
-def image_cutout(astrobaseIO, params, extra, local_data_dir):
+def do_image_cutout(astrobaseIO, params, extra, local_data_dir):
     list = params.split(',')
     observation_dir = list[0]
     fits_file = list[1]
