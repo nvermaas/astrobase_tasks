@@ -50,7 +50,7 @@ class AstroBase:
 
     def do_print(self, info_str):
         timestamp = datetime.datetime.now().strftime(TIME_FORMAT)
-        print(str(timestamp)+ ' - '+info_str)
+        #print(str(timestamp)+ ' - '+info_str)
 
     # === Backend requests ================================================================================
 
