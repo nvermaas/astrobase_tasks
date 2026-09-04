@@ -1,4 +1,4 @@
-set RABBITMQ_BROKER=amqp://nvermaas:RaBbIt_2019@192.168.178.126:5672
+set RABBITMQ_BROKER=amqp://nvermaas:RaBbIt_2019@192.168.178.56:5672
 set ASTROBASE_URL=https://uilennest.net/my_astrobase
 set ASTROBASE_USER=nvermaas
 set ASTROBASE_PASSWORD=StErReN_2020

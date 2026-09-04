@@ -165,6 +165,7 @@ def do_submit_jobs(astrobaseIO, local_data_dir, astrometry_url, astrometry_api_k
             directory = os.path.join(local_data_dir,taskID)
             path_to_file = os.path.join(directory,filename)
 
+            print("*processor* : processing " + filename, "slack")
             astrobaseIO.report("*processor* : processing " + filename, "slack")
 
             # do the magic!

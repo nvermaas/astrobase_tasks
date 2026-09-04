@@ -147,4 +147,5 @@ def do_ingest(astrobaseIO, local_landing_pad, local_data_dir):
             path_to_file = os.path.join(dirpath, filename)
             name, ext = filename.split(".")
             taskid = ingest_from_image(path_to_file, name)
+            print("*ingest* : added observation " + taskid)
             astrobaseIO.report("*ingest* : added observation " + taskid, "slack")

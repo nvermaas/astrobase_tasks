@@ -50,7 +50,7 @@ def get_jobs_from_astrobase(job_service):
 
 # receive the job and handle it based on the 'command' parameter.
 def handle_job(id):
-    print('services.handle_job('+id+')')
+    print('jobs_controller.handle_job('+id+')')
     astrobaseIO.astrobase_interface.do_PUT(key='jobs:status', id=id, taskid=None, value="handling")
     command = astrobaseIO.astrobase_interface.do_GET(key='jobs:command', id=id, taskid=None)
     params = astrobaseIO.astrobase_interface.do_GET(key='jobs:parameters', id=id, taskid=None)
@@ -71,8 +71,6 @@ def handle_job(id):
     except Exception as error:
 
         print(str(error))
-        #astrobaseIO.astrobase_interface.do_PUT(key='jobs:result', id=id, taskid=None, value=str(error))
-        #astrobaseIO.astrobase_interface.do_PUT(key='jobs:status', id=id, taskid=None, value="error")
         astrobaseIO.report("*jobs* : job " + str(id) + " - " + str(error), "print")
 
         # be stern, if a job fails, delete it.

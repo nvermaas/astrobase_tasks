@@ -28,7 +28,7 @@ astrobaseIO = AstroBaseIO(ASTROBASE_URL, ASTROBASE_USER, ASTROBASE_PASSWORD)
 # this is a 'ping' to the registration pipeline
 # this will run all the registration services once.
 def run_registration_pipeline():
-    print('registration_controller.run_registration_pipeline()')
+    #print('registration_controller.run_registration_pipeline()')
 
     # execute all the services (async)
     tasks.run_ingest.delay()
@@ -38,34 +38,34 @@ def run_registration_pipeline():
 
     # execute ingest service
     # do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
-    print('done run_registration_pipeline')
+    #print('done run_registration_pipeline')
 
 
 def run_ingest():
-    print('registration_controller.ingest()')
+    #print('registration_controller.ingest()')
 
     # execute ingest service
     do_ingest(astrobaseIO, LANDING_PAD, LOCAL_DATA_DIR)
-    print('done ingest')
+    #print('done ingest')
 
 
 def run_submit():
-    print('registration_controller.ingest()')
+    #print('registration_controller.ingest()')
 
     do_submit(astrobaseIO, LOCAL_DATA_DIR, ASTROMETRY_URL, ASTROMETRY_API_KEY)
-    print('done submit')
+    #print('done submit')
 
 
 def run_processor():
-    print('registration_controller.processor()')
+    #print('registration_controller.processor()')
 
     do_processor(astrobaseIO, LOCAL_DATA_DIR, ASTROMETRY_URL, ASTROMETRY_API_KEY)
-    print('done processor')
+    #print('done processor')
 
 
 def run_cleanup():
-    print('registration_controller.run_cleanup()')
+    #print('registration_controller.run_cleanup()')
 
     # execute ingest service
     do_cleanup(astrobaseIO, LOCAL_DATA_DIR)
-    print('done cleanup')
+    #print('done cleanup')
