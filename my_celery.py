@@ -16,10 +16,8 @@ except:
     POLLING_IN_SECONDS = 30
 
 
-app = Celery('my_celery',
-             backend='rpc://',
-             broker=RABBITMQ_BROKER)
-
+app = Celery('my_celery', broker=RABBITMQ_BROKER)
+app.conf.task_ignore_result = True
 app.autodiscover_tasks(['astro_tasks','dev_tasks'])
 
 # Optional configuration, see the application user guide.
