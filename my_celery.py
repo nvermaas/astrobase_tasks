@@ -2,7 +2,8 @@ import os
 from celery import Celery
 import astro_tasks, dev_tasks
 
-VERSION = "16 jul 2023"
+VERSION = "4 sep 2026"
+CELERYD_LOG_LEVEL = 'WARNING'
 
 try:
     RABBITMQ_BROKER = os.environ['RABBITMQ_BROKER']
