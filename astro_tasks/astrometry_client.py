@@ -6,7 +6,8 @@ import time
 import base64
 
 from urllib.parse import urlparse, urlencode, quote
-from urllib.request import urlopen, Request
+from urllib.request import urlopen, Request, build_opener, HTTPCookieProcessor
+from http.cookiejar import CookieJar
 from urllib.error import HTTPError
 
 #from exceptions import Exception
@@ -32,12 +33,26 @@ class RequestError(Exception):
     pass
 
 class Client(object):
-    default_url = 'http://nova.astrometry.net/api/'
+    default_url = 'https://nova.astrometry.net/api/'
 
     def __init__(self,
                  apiurl = default_url):
         self.session = None
         self.apiurl = apiurl
+
+        # Keep cookies between requests.  The Nova web service now uses
+        # Django's CSRF protection, so the CSRF cookie obtained by the
+        # initial GET must be sent with subsequent POST requests.
+        self.cookiejar = CookieJar()
+        self.opener = build_opener(
+            HTTPCookieProcessor(self.cookiejar)
+        )
+
+        # Prime the cookie jar.  The API itself may not set the CSRF cookie,
+        # so fetch the main Nova page first.
+        site_url = urlparse(self.apiurl)
+        site_root = '%s://%s/' % (site_url.scheme, site_url.netloc)
+        self.opener.open(site_root).close()
 
     def get_url(self, service):
         return self.apiurl + service
@@ -87,10 +102,29 @@ class Client(object):
             print('Sending data:', data)
             headers = {}
 
+        # Django's CSRF middleware expects the CSRF token from the cookie
+        # to be echoed in the X-CSRFToken header for POST requests.
+        csrf_token = None
+        for cookie in self.cookiejar:
+            if cookie.name == 'csrftoken':
+                csrf_token = cookie.value
+                break
+
+        if csrf_token:
+            headers['X-CSRFToken'] = csrf_token
+
+        # For HTTPS, Django may also require a same-origin Referer.
+        if csrf_token:
+            site_url = urlparse(self.apiurl)
+            site_root = '%s://%s/' % (site_url.scheme, site_url.netloc)
+            headers['Referer'] = site_root
+
         request = Request(url=url, headers=headers, data=data)
 
         try:
-            f = urlopen(request)
+            # Use the cookie-aware opener rather than urlopen(), so the
+            # CSRF/session cookies are retained across requests.
+            f = self.opener.open(request)
             txt = f.read()
             print('Got json:', txt)
             result = json2python(txt)
@@ -437,7 +471,7 @@ if __name__ == '__main__':
 
         for url,fn in retrieveurls:
             print('Retrieving file from', url, 'to', fn)
-            f = urlopen(url)
+            f = c.opener.open(url)
             txt = f.read()
             w = open(fn, 'wb')
             w.write(txt)
