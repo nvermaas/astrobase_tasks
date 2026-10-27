@@ -5,7 +5,7 @@ jobs:
   docker-deploy-middle-earth:
     runs-on: ubuntu-latest
     steps:
-      - name: execute build & deploy procedure on mintbox
+      - name: execute build & deploy procedure on middle-earth
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.MY_HOST }}

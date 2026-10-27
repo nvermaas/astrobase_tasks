@@ -4,7 +4,7 @@ jobs:
   docker-deploy-woodland:
     runs-on: ubuntu-latest
     steps:
-      - name: execute build & deploy procedure on mintbox
+      - name: execute build & deploy procedure on woodland
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.MY_HOST }}
